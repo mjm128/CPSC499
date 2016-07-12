@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        FragmentManager fragment = getFragmentManager();
+        fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment()).commit();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
