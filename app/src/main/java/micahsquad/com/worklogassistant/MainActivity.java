@@ -3,6 +3,7 @@ package micahsquad.com.worklogassistant;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -79,18 +80,22 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentManager fragment = getFragmentManager();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_jobs_layout) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment()).commit();
+        } else if (id == R.id.nav_recent_layout) {
+            fragment.beginTransaction().replace(R.id.content_frame, new RecentFragment()).commit();
+        } else if (id == R.id.nav_search_layout) {
+            fragment.beginTransaction().replace(R.id.content_frame, new SearchFragment()).commit();
+        } else if (id == R.id.nav_statistics_layout) {
+            fragment.beginTransaction().replace(R.id.content_frame, new StatisticsFragment()).commit();
+        } else if (id == R.id.export_import) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.pdf) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.settings) {
 
         }
 
