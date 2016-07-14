@@ -19,7 +19,9 @@ public class WorkLogDB {
     }
 
     public void close(){
-        db.close();
+        if (db != null && db.isOpen()){
+            db.close();
+        }
     }
 
     public void createJob(String job_name, String job_position, Double job_pay){

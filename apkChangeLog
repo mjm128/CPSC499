@@ -1,0 +1,17 @@
+~~~~~ ### APK Change Log ### ~~~~~~~
+
+----- Version 0.02 (7/14/2016) -----
+    - Added DatabaseHelper class for creating the database
+    - Added the WorkLogDB class for adding in SQL statements
+    - Created the new Activity for creating Jobs
+    - Changed the FAB to hide when it's not on the Jobs fragment
+    - FAB now goes to the create new job activity
+    - Styled the create new job activity textfields
+    > NEEDS FIXING: Adding the textview items into the database
+
+
+----- Version 0.01 (7/12/2016) -----
+    - Created the main activity with navigation bar
+    - Created navigation bar items and fragments for each activity
+    - Fixed default fragment not going to Jobs.
+    > NEEDS FIXING: Default fragment needs to highlight on launch
