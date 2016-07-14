@@ -1,10 +1,10 @@
 package micahsquad.com.worklogassistant;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.app.FragmentManager;
-import android.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,8 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +30,11 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_plus);
+        fab = (FloatingActionButton) findViewById(R.id.floating_plus);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(getApplicationContext(), CreateJobActivity.class));
             }
         });
 
@@ -89,12 +90,16 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_jobs_layout) {
             // Handle the camera action
             fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment()).commit();
+            fab.show();
         } else if (id == R.id.nav_recent_layout) {
             fragment.beginTransaction().replace(R.id.content_frame, new RecentFragment()).commit();
+            fab.hide();
         } else if (id == R.id.nav_search_layout) {
             fragment.beginTransaction().replace(R.id.content_frame, new SearchFragment()).commit();
+            fab.hide();
         } else if (id == R.id.nav_statistics_layout) {
             fragment.beginTransaction().replace(R.id.content_frame, new StatisticsFragment()).commit();
+            fab.hide();
         } else if (id == R.id.export_import) {
 
         } else if (id == R.id.pdf) {

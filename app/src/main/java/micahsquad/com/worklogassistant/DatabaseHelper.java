@@ -61,13 +61,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE tips (" +
             "tipid INTEGER PRIMARY KEY AUTOINCREMENT," +
             "shiftid INTEGER," +
-            "FOREIGN KEY(shiftid) REFRENCES timecards(shiftid)" +
             "netsales REAL," +
             "cctips REAL," +
             "tax REAL," +
             "totalrevenue REAL," +
             "totaltip REAL," +
-            "tippercent REAL);";
+            "tippercent REAL," +
+            "FOREIGN KEY(shiftid) REFRENCES timecards(shiftid));";
 
 
     public DatabaseHelper(Context context) {
@@ -94,4 +94,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // create new tables
         onCreate(db);
     }
+
+
 }
