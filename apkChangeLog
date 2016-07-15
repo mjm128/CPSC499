@@ -1,5 +1,13 @@
 ~~~~~ ### APK Change Log ### ~~~~~~~
 
+----- Version 0.03 (7/14/2016) -----
+    - Fixed the SQLStatements needed to make it work
+    - Create Job Activity now will successfully add a job
+    - Goes to main menu after adding a job.
+    - Jobs are successfully added to database.
+    > NEED TO ADD: Displaying of jobs in database in the main activity.
+
+
 ----- Version 0.02 (7/14/2016) -----
     - Added DatabaseHelper class for creating the database
     - Added the WorkLogDB class for adding in SQL statements
