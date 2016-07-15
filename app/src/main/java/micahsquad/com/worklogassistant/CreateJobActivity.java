@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,9 +18,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-public class CreateJobActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreateJobActivity extends AppCompatActivity  {
 
-    private Toolbar toolbar;
     private EditText jobName, jobPosition, jobPay;
     private TextInputLayout inputLayoutName, inputLayoutPosition, inputLayoutPay;
     private Button submitButton;
@@ -29,6 +31,15 @@ public class CreateJobActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_job);
+        getSupportActionBar().setTitle("New Job");
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+
+        final ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.close_light);
+
         context = getApplicationContext();
 
 
@@ -53,17 +64,20 @@ public class CreateJobActivity extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
-    }
 
-    public void addJob(View view){
-        DatabaseHelper db = new DatabaseHelper(context);
 
     }
 
     @Override
-    public void onClick(View view) {
-        db = new WorkLogDB(context);
-        db.createJob(jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
-        Toast toast = Toast.makeText(context, jobName.getText(), Toast.LENGTH_LONG);
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
 }
