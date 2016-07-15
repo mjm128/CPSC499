@@ -33,7 +33,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE timecards (" +
             "shiftid INTEGER PRIMARY KEY AUTOINCREMENT," +
             "jobid INTEGER NOT NULL," +
-            "FOREIGN KEY(jobid) REFRENCES jobs(jobid)" +
             "shiftdate INTEGER," +
             "starttime INTEGER," +
             "endtime INTEGER," +
@@ -41,19 +40,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "timeworked REAL," +
             "shiftpay REAL," +
             "totalpay REAL," +
-            "1breakstart INTEGER," +
-            "1breakend INTEGER," +
-            "2breakstart INTEGER," +
-            "2breakend INTEGER," +
-            "3breakstart INTEGER," +
-            "3breakend INTEGER," +
-            "4breakstart INTEGER," +
-            "4breakend INTEGER," +
-            "1lunchstart INTEGER," +
-            "1lunchend INTEGER," +
-            "2lunchstart INTEGER," +
-            "2lunchend INTEGER," +
-            "comment TEXT);";
+            "first_breakstart INTEGER," +
+            "first_breakend INTEGER," +
+            "second_breakstart INTEGER," +
+            "second_breakend INTEGER," +
+            "third_breakstart INTEGER," +
+            "third_breakend INTEGER," +
+            "fourth_breakstart INTEGER," +
+            "fourth_breakend INTEGER," +
+            "first_lunchstart INTEGER," +
+            "first_lunchend INTEGER," +
+            "second_lunchstart INTEGER," +
+            "second_lunchend INTEGER," +
+            "comment TEXT," +
+            "FOREIGN KEY(jobid) REFERENCES jobs(jobid));";
 
 
     //Table tips
@@ -67,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "totalrevenue REAL," +
             "totaltip REAL," +
             "tippercent REAL," +
-            "FOREIGN KEY(shiftid) REFRENCES timecards(shiftid));";
+            "FOREIGN KEY(shiftid) REFERENCES timecards(shiftid));";
 
 
     public DatabaseHelper(Context context) {

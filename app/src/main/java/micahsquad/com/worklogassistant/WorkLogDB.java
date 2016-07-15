@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.ContentObservable;
 import android.database.sqlite.*;
+import android.widget.Toast;
 
 /**
  * Created by Micah on 7/14/2016.
@@ -11,11 +12,9 @@ import android.database.sqlite.*;
 public class WorkLogDB {
 
     private final SQLiteDatabase db;
-    private final Context context;
 
     public WorkLogDB(final Context _context) {
-        context = _context;
-        db = new DatabaseHelper(context).getWritableDatabase();
+        db = new DatabaseHelper(_context).getWritableDatabase();
     }
 
     public void close(){
@@ -25,8 +24,11 @@ public class WorkLogDB {
     }
 
     public void createJob(String job_name, String job_position, Double job_pay){
-        db.execSQL("INSERT INTO jobs (, job_name, job_position, job_pay");
-
+        ContentValues values = new ContentValues();
+        values.put("jobname", job_name);
+        values.put("jobposition", job_position);
+        values.put("jobpay", job_pay);
+        db.insert("jobs", null, values);
     }
 
 }
