@@ -3,6 +3,8 @@ package micahsquad.com.worklogassistant;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -14,11 +16,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.text.TextWatcher;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 public class CreateJobActivity extends AppCompatActivity  {
+
+    CoordinatorLayout coordinatorLayout;
 
     private EditText jobName, jobPosition, jobPay;
     private TextInputLayout inputLayoutName, inputLayoutPosition, inputLayoutPay;
@@ -31,9 +33,9 @@ public class CreateJobActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_job);
+        //Change Action Bar Title
         getSupportActionBar().setTitle("New Job");
         getSupportActionBar().setHomeButtonEnabled(true);
-
 
         final ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -41,7 +43,6 @@ public class CreateJobActivity extends AppCompatActivity  {
         actionBar.setHomeAsUpIndicator(R.drawable.close_light);
 
         context = getApplicationContext();
-
 
         //Set up TextInput
         inputLayoutName = (TextInputLayout) findViewById(R.id.input_layout_job_name);
@@ -59,9 +60,12 @@ public class CreateJobActivity extends AppCompatActivity  {
             public void onClick(View view) {
                 db = new WorkLogDB(context);
                 db.createJob(jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
-                Toast toast = Toast.makeText(context, jobName.getText(), Toast.LENGTH_LONG);
-                toast.show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                //Pass the job name to the main activity
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("jobName", jobName.getText().toString());
+                startActivity(i);
+                finish();
             }
         });
 

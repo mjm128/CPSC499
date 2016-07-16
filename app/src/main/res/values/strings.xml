@@ -3,8 +3,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Create New Job Strings -->
     <string name="hint_job">Job Name</string>
     <string name="hint_position">Position / Title</string>
-    <string name="hint_pay">$ per Hour</string>
+    <string name="hint_pay">Hourly Pay ($)</string>
 
 </resources>

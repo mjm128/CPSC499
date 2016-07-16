@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.app.FragmentManager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -37,6 +41,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(getApplicationContext(), CreateJobActivity.class));
             }
         });
+
+        //Handle Job Creation Snackbar
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("jobName");
+            if (value != null) {
+                final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                coordinatorLayoutView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+                SpannableStringBuilder snackbarText = new SpannableStringBuilder();
+                snackbarText.append("New Job Created: ");
+                int boldStart = snackbarText.length();
+                snackbarText.append(value);
+                snackbarText.setSpan(new ForegroundColorSpan(0xff00BFA5), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                snackbarText.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                Snackbar.make(coordinatorLayoutView, snackbarText, Snackbar.LENGTH_LONG).show();
+            }
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
