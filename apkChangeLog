@@ -1,11 +1,16 @@
-~~~~~ ### APK Change Log ### ~~~~~~~
+============================== APK Change Log ==============================
+
+----- Version 0.04 (7/15/2016) -----
+    - Removed toast notification on new job creation
+    - Passed values to main activity through putExtra for knowing if a job was created
+    - Added Snackbar creation in main activity for new job creation
+    - Themed Snackbar
 
 ----- Version 0.03 (7/14/2016) -----
     - Fixed the SQLStatements needed to make it work
     - Create Job Activity now will successfully add a job
-    - Goes to main menu after adding a job.
-    - Jobs are successfully added to database.
-    > NEED TO ADD: Displaying of jobs in database in the main activity.
+    - Goes to main menu after adding a job
+    - Jobs are successfully added to database
 
 
 ----- Version 0.02 (7/14/2016) -----
@@ -15,11 +20,9 @@
     - Changed the FAB to hide when it's not on the Jobs fragment
     - FAB now goes to the create new job activity
     - Styled the create new job activity textfields
-    > NEEDS FIXING: Adding the textview items into the database
 
 
 ----- Version 0.01 (7/12/2016) -----
     - Created the main activity with navigation bar
     - Created navigation bar items and fragments for each activity
-    - Fixed default fragment not going to Jobs.
-    > NEEDS FIXING: Default fragment needs to highlight on launch
+    - Fixed default fragment not going to Jobs

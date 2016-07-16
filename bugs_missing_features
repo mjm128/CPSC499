@@ -1,0 +1,5 @@
+============================== Known Bugs / Missing Features ==============================
+
++ Need to add an undo to Snackbar for job creation to delete job (7/16/2016)
++ Main Activity doesn't highlight Jobs menu option on launch (7/11/2016)
+
