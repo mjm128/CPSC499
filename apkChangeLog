@@ -5,6 +5,7 @@
     - Passed values to main activity through putExtra for knowing if a job was created
     - Added Snackbar creation in main activity for new job creation
     - Themed Snackbar
+    > FIXED: Default fragment highlighting
 
 ----- Version 0.03 (7/14/2016) -----
     - Fixed the SQLStatements needed to make it work

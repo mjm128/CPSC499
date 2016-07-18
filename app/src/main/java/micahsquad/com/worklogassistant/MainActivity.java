@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -23,11 +24,14 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     FloatingActionButton fab;
+    FragmentManager fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FragmentManager fragment = getFragmentManager();
-        fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment()).commit();
+        if (fragment == null){
+            FragmentManager fragment = getFragmentManager();
+            fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment(), "JOBS").commit();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -42,10 +46,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        //Handle Job Creation Snackbar
+        //Handle Snackbar creations
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("jobName");
+            //Job creation Snackbar
             if (value != null) {
                 final View coordinatorLayoutView = findViewById(R.id.floating_plus);
                 coordinatorLayoutView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -69,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_jobs_layout);
     }
 
     @Override
