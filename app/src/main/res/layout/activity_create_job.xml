@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:inputType="textCapSentences"
             android:singleLine="true"
+            android:textSize="20dp"
             android:hint="@string/hint_job" />
 
     </android.support.design.widget.TextInputLayout>
@@ -30,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/input_layout_job_name"
-        android:paddingTop="0dp">
+        android:paddingTop="10dp">
 
         <EditText
             android:id="@+id/input_position"
@@ -47,7 +48,8 @@
         android:id="@+id/input_layout_job_pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/input_layout_job_position">
+        android:layout_below="@+id/input_layout_job_position"
+        android:paddingTop="10dp">
 
         <EditText
             android:id="@+id/input_pay"
