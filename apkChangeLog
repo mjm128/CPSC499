@@ -1,5 +1,13 @@
 ============================== APK Change Log ==============================
 
+----- Version 0.05 (7/19/2016) -----
+    - Added ability to delete a job via jobid
+    - Added cascading delete of foreign keys in the database
+    - Added UNDO action to Snackbar to delete a job that was just added
+    - Added text validation in the create new job activity
+    - Changed the layout of the new job activity a tiny bit
+    - FIXED: Not remembering the fragment the app was on when tabbing out and in on main activity
+
 ----- Version 0.04 (7/15/2016) -----
     - Removed toast notification on new job creation
     - Passed values to main activity through putExtra for knowing if a job was created
