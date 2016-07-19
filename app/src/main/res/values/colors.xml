@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#00BFA5</color>
     <color name="grey">#EEEEEE</color>
+
+    <!-- Text Input Card Styling -->
+    <color name="card_grey">#FF999999</color>
+    <color name="card_white">#FFFFFFFF</color>
+    <color name="card_shadow">#FFEEEEEE</color>
+
 </resources>
