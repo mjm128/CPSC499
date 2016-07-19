@@ -53,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "second_lunchstart INTEGER," +
             "second_lunchend INTEGER," +
             "comment TEXT," +
-            "FOREIGN KEY(jobid) REFERENCES jobs(jobid)) ON DELETE CASCADE;";
+            "FOREIGN KEY(jobid) REFERENCES jobs(jobid) ON DELETE CASCADE);";
 
 
     //Table tips
@@ -67,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "totalrevenue REAL," +
             "totaltip REAL," +
             "tippercent REAL," +
-            "FOREIGN KEY(shiftid) REFERENCES timecards(shiftid)) ON DELETE CASCADE;";
+            "FOREIGN KEY(shiftid) REFERENCES timecards(shiftid) ON DELETE CASCADE);";
 
 
     public DatabaseHelper(Context context) {
