@@ -102,6 +102,7 @@ public class CreateJobActivity extends AppCompatActivity  {
     private boolean validateJobName(){
         if (jobName.getText().toString().trim().isEmpty()){
             inputLayoutName.setError("Name cannot be empty");
+            jobName.requestFocus();
             return false;
         } else {
             inputLayoutName.setErrorEnabled(false);
@@ -113,7 +114,7 @@ public class CreateJobActivity extends AppCompatActivity  {
     private boolean validateJobPosition(){
         if (jobPosition.getText().toString().trim().isEmpty()){
             inputLayoutPosition.setError("Position cannot be empty");
-            jobName.requestFocus();
+            jobPosition.requestFocus();
             return false;
         } else {
             inputLayoutPosition.setErrorEnabled(false);
@@ -128,6 +129,7 @@ public class CreateJobActivity extends AppCompatActivity  {
             return true;
         } catch (NumberFormatException e){
             inputLayoutPay.setError("Must enter a number");
+            jobPay.requestFocus();
         }
         return false;
     }
