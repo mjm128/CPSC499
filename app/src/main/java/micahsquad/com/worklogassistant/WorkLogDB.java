@@ -40,12 +40,13 @@ public class WorkLogDB {
         Log.i("LOG", "Deleted job with jobid value of " + String.valueOf(job_id));
         db.delete("jobs", "jobid" + " = ?", new String[] { String.valueOf(job_id)});
 
-        Cursor cursor = db.rawQuery("SELECT max(jobid) FROM jobs", null);
+        //Used for resetting the auto increment counter
+        /*Cursor cursor = db.rawQuery("SELECT max(jobid) FROM jobs", null);
         cursor.moveToFirst();
         long value = cursor.getInt(0);
         String selectQuery = "UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(value) + " WHERE name = 'jobs';";
         Log.i("LOG", "Set jobid incrementer value to " + String.valueOf(value));
-        db.execSQL(selectQuery);
+        db.execSQL(selectQuery);*/
     }
 
 }
