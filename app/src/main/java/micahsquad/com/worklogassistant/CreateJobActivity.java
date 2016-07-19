@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -58,14 +59,7 @@ public class CreateJobActivity extends AppCompatActivity  {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db = new WorkLogDB(context);
-                db.createJob(jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
-
-                //Pass the job name to the main activity
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                i.putExtra("jobName", jobName.getText().toString());
-                startActivity(i);
-                finish();
+                submitNewJob();
             }
         });
 
@@ -84,4 +78,90 @@ public class CreateJobActivity extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
+    public void submitNewJob(){
+        if (!validateJobName()){
+            return;
+        }
+        if (!validateJobPosition()){
+            return;
+        }
+        if (!validateJobPay()){
+            return;
+        }
+
+        db = new WorkLogDB(context);
+        db.createJob(jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
+
+        //Pass the job name to the main activity
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        i.putExtra("jobName", jobName.getText().toString());
+        startActivity(i);
+        finish();
+    }
+
+    private boolean validateJobName(){
+        if (jobName.getText().toString().trim().isEmpty()){
+            inputLayoutName.setError("Name cannot be empty");
+            return false;
+        } else {
+            inputLayoutName.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validateJobPosition(){
+        if (jobPosition.getText().toString().trim().isEmpty()){
+            inputLayoutPosition.setError("Position cannot be empty");
+            jobName.requestFocus();
+            return false;
+        } else {
+            inputLayoutPosition.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validateJobPay(){
+        try {
+            double value = Double.parseDouble(jobPay.getText().toString());
+            return true;
+        } catch (NumberFormatException e){
+            inputLayoutPay.setError("Must enter a number");
+        }
+        return false;
+    }
+
+    private class NewJobTextWatcher implements TextWatcher {
+        private View view;
+
+        private NewJobTextWatcher(View view){
+            this.view = view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()){
+                case R.id.input_job:
+                    validateJobName();
+                    break;
+                case R.id.input_position:
+                    validateJobPosition();
+                    break;
+                case R.id.input_pay:
+                    validateJobPay();
+                    break;
+            }
+        }
+    }
 }
