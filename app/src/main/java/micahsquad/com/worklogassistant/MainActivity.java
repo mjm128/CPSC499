@@ -1,6 +1,8 @@
 package micahsquad.com.worklogassistant;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     FloatingActionButton fab;
     FragmentManager fragment;
+    private Context context;
+    private WorkLogDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FragmentManager fragment = getFragmentManager();
             fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment(), "JOBS").commit();
         }
+        context = getApplicationContext();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -47,13 +52,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         //Handle Snackbar creations
-        Bundle extras = getIntent().getExtras();
+        final Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String value = extras.getString("jobName");
             //Job creation Snackbar
             if (value != null) {
                 final View coordinatorLayoutView = findViewById(R.id.floating_plus);
-                coordinatorLayoutView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
                 SpannableStringBuilder snackbarText = new SpannableStringBuilder();
                 snackbarText.append("New Job Created: ");
@@ -61,8 +65,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 snackbarText.append(value);
                 snackbarText.setSpan(new ForegroundColorSpan(0xff00BFA5), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 snackbarText.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                Snackbar.make(coordinatorLayoutView, snackbarText, Snackbar.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(coordinatorLayoutView, snackbarText, Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        long job_id = extras.getLong("jobId");
+                        db = new WorkLogDB(context);
+                        db.deleteJob(job_id);
+                        Snackbar snackbar1 = Snackbar.make(view, "Job has been deleted", Snackbar.LENGTH_LONG);
+                        snackbar1.show();
+                    }
+
+                    ;
+                });
+                snackbar.setActionTextColor(0xFFD32F2F); //hex for red
+                snackbar.show();
             }
+
 
         }
 
