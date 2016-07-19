@@ -3,7 +3,9 @@ package micahsquad.com.worklogassistant;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.ContentObservable;
+import android.database.Cursor;
 import android.database.sqlite.*;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -23,12 +25,27 @@ public class WorkLogDB {
         }
     }
 
-    public void createJob(String job_name, String job_position, Double job_pay){
+    public long createJob(String job_name, String job_position, Double job_pay){
         ContentValues values = new ContentValues();
         values.put("jobname", job_name);
         values.put("jobposition", job_position);
         values.put("jobpay", job_pay);
-        db.insert("jobs", null, values);
+        long job_id = db.insert("jobs", null, values);
+
+        Log.e("LOG", "New job created with jobid value of " + String.valueOf(job_id));
+        return job_id;
+    }
+
+    public void deleteJob(long job_id){
+        Log.i("LOG", "Deleted job with jobid value of " + String.valueOf(job_id));
+        db.delete("jobs", "jobid" + " = ?", new String[] { String.valueOf(job_id)});
+
+        Cursor cursor = db.rawQuery("SELECT max(jobid) FROM jobs", null);
+        cursor.moveToFirst();
+        long value = cursor.getInt(0);
+        String selectQuery = "UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(value) + " WHERE name = 'jobs';";
+        Log.i("LOG", "Set jobid incrementer value to " + String.valueOf(value));
+        db.execSQL(selectQuery);
     }
 
 }
