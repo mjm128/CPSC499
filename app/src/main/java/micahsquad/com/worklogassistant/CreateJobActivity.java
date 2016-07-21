@@ -89,8 +89,10 @@ public class CreateJobActivity extends AppCompatActivity  {
             return;
         }
 
-        db = new WorkLogDB(context);
-        long job_id = db.createJob(jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
+        long job_id;
+        try ( WorkLogDB db = new WorkLogDB(context)){
+            job_id = db.createJob(jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
+        }
 
         //Pass the job name to the main activity
         Intent i = new Intent(getApplicationContext(), MainActivity.class);

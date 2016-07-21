@@ -8,10 +8,12 @@ import android.database.sqlite.*;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.List;
+
 /**
  * Created by Micah on 7/14/2016.
  */
-public class WorkLogDB {
+public class WorkLogDB implements AutoCloseable {
 
     private final SQLiteDatabase db;
 
@@ -47,6 +49,13 @@ public class WorkLogDB {
         String selectQuery = "UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(value) + " WHERE name = 'jobs';";
         Log.i("LOG", "Set jobid incrementer value to " + String.valueOf(value));
         db.execSQL(selectQuery);*/
+    }
+
+    public Cursor getAllJobs(){
+        Log.i("LOG", "Retrieved job table");
+        String selectQuery = "SELECT * FROM jobs";
+
+        return db.rawQuery(selectQuery, null);
     }
 
 }

@@ -75,13 +75,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         snackbar1.show();
                     }
 
-                    ;
                 });
                 snackbar.setActionTextColor(0xFFD32F2F); //hex for red
                 snackbar.show();
             }
-
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
