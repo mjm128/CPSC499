@@ -116,7 +116,8 @@ public class JobsFragment extends Fragment {
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
+           /* Used for dynamically changing the size of the card. Alternating the size back and forth.
+           int position = parent.getChildAdapterPosition(view); // item position
             int column = position % spanCount; // item column
 
             if (includeEdge) {
@@ -134,6 +135,7 @@ public class JobsFragment extends Fragment {
                     outRect.top = spacing; // item top
                 }
             }
+            */
         }
     }
 
