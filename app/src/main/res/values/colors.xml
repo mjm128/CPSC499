@@ -11,6 +11,6 @@
     <color name="card_shadow">#FFEEEEEE</color>
 
     <!-- Job Card Colors -->
-    <color name="job_card_viewBg">#f1f5f8</color>
+    <color name="job_card_viewBg">#00FFFFFF</color>
 
 </resources>

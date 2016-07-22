@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.DecimalFormat;
 
 import java.util.List;
 /**
@@ -49,9 +50,10 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+        DecimalFormat formater = new DecimalFormat("0.00#");
         Job job = jobList.get(position);
         holder.title.setText(job.getName());
-        holder.count.setText(job.getPosition() + " - $" + job.getPay());
+        holder.count.setText(job.getPosition() + " - $" + formater.format(job.getPay()));
 
         // loading album cover using Glide library
         //Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
@@ -87,7 +89,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
                     Toast.makeText(mContext, "Edit Job", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.action_job_delete:
-                    Toast.makeText(mContext, "Delete Jobt", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Delete Job", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
             }

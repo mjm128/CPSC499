@@ -4,6 +4,7 @@ package micahsquad.com.worklogassistant;
  * Created by Micah on 7/20/2016.
  */
 public class Job {
+    private int jobid;
     private String name;
     private String position;
     private Double pay;
@@ -17,6 +18,10 @@ public class Job {
         this.position = position;
         this.pay = pay;
     }
+
+    public int getJobId() { return jobid; }
+
+    public void setJobId(int jobid) { this.jobid = jobid; }
 
     public String getName(){
         return name;

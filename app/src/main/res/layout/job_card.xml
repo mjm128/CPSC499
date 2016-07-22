@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="@dimen/job_card_margin"
-        android:elevation="3dp"
+        android:elevation="10dp"
         android:clickable="true"
         card_view:cardCornerRadius="@dimen/job_card_radius">
 
@@ -50,11 +50,11 @@
 
             <ImageView
                 android:id="@+id/overflow"
-                android:layout_width="@dimen/ic_album_overflow_width"
-                android:layout_height="@dimen/ic_album_overflow_height"
+                android:layout_width="@dimen/ic_job_overflow_width"
+                android:layout_height="@dimen/ic_job_overflow_height"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/thumbnail"
-                android:layout_marginTop="@dimen/ic_album_overflow_margin_top"
+                android:layout_marginTop="@dimen/ic_job_overflow_margin_top"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_more_vert_black_24dp" />
 
