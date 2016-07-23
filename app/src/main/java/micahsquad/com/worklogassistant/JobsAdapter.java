@@ -1,6 +1,5 @@
 package micahsquad.com.worklogassistant;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+
 import java.text.DecimalFormat;
 
 import java.util.List;
@@ -21,16 +24,17 @@ import java.util.List;
 public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> {
     private Context mContext;
     private List<Job> jobList;
+    String letter, nextLetter;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, count;
-        public ImageView thumbnail, overflow;
+        public ImageView itemletter, overflow;
 
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             count = (TextView) view.findViewById(R.id.count);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            itemletter = (ImageView) view.findViewById(R.id.item_letter);
             overflow = (ImageView) view.findViewById(R.id.overflow);
         }
     }
@@ -55,8 +59,13 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
         holder.title.setText(job.getName());
         holder.count.setText(job.getPosition() + " - $" + formater.format(job.getPay()));
 
-        // loading album cover using Glide library
-        //Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
+
+        //Code to get gmail like character icons
+        letter = String.valueOf(job.getName().charAt(0));
+        nextLetter = String.valueOf(job.getName().charAt(job.getName().length()-1));
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        TextDrawable drawable = TextDrawable.builder().buildRect(letter, generator.getColor(letter));
+        holder.itemletter.setImageDrawable(drawable);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +98,8 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
                     Toast.makeText(mContext, "Edit Job", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.action_job_delete:
+                    WorkLogDB db = new WorkLogDB(mContext);
+                    //db.deleteJob();
                     Toast.makeText(mContext, "Delete Job", Toast.LENGTH_SHORT).show();
                     return true;
                 default:

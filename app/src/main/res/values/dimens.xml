@@ -15,7 +15,7 @@
     <dimen name="job_card_margin">8dp</dimen>
     <dimen name="job_card_radius">0dp</dimen>
     <dimen name="job_cover_height">100dp</dimen>
-    <dimen name="job_title_padding">15dp</dimen>
+    <dimen name="job_title_padding">25dp</dimen>
     <dimen name="job_title">20dp</dimen>
     <dimen name="position_count_padding_bottom">5dp</dimen>
     <dimen name="position_count">12dp</dimen>

@@ -1,5 +1,17 @@
 ============================== APK Change Log ==============================
 
+----- Version 0.07 (7/23/2016) -----
+    - Added GMAIL like letter icon images to the job card
+    - Changed the dimensions of the card and layout for a much better looking list
+    - Shrunk the height of job card and changed to one card per row
+    - Removed border around the recycleview in jobs fragment
+    - Removed vertical scrollbars
+
+----- Version 0.06 (7/23/2016) -----
+    - Added displaying of jobs in the job fragment
+    - Created job card view
+    - Set job card view to 2 per row while I fix dimensions
+
 ----- Version 0.05 (7/19/2016) -----
     - Added ability to delete a job via jobid
     - Added cascading delete of foreign keys in the database
