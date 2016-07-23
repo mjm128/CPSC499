@@ -62,9 +62,8 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
 
         //Code to get gmail like character icons
         letter = String.valueOf(job.getName().charAt(0));
-        nextLetter = String.valueOf(job.getName().charAt(job.getName().length()-1));
         ColorGenerator generator = ColorGenerator.MATERIAL;
-        TextDrawable drawable = TextDrawable.builder().buildRect(letter, generator.getColor(letter));
+        TextDrawable drawable = TextDrawable.builder().buildRect(letter, generator.getColor(job.getName()));
         holder.itemletter.setImageDrawable(drawable);
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
