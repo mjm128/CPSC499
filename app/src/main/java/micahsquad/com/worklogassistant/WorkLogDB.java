@@ -53,7 +53,7 @@ public class WorkLogDB implements AutoCloseable {
 
     public Cursor getAllJobs(){
         Log.i("LOG", "Retrieved job table");
-        String selectQuery = "SELECT * FROM jobs";
+        String selectQuery = "SELECT * FROM jobs ORDER BY jobname ASC;";
 
         return db.rawQuery(selectQuery, null);
     }
