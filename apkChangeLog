@@ -6,8 +6,10 @@
     - Shrunk the height of job card and changed to one card per row
     - Removed border around the recycleview in jobs fragment
     - Removed vertical scrollbars
+    - Changed get all job database call to sort in ascending order
+    - Changed GMAIL icon color to use full jobname string
 
------ Version 0.06 (7/23/2016) -----
+----- Version 0.06 (7/21/2016) -----
     - Added displaying of jobs in the job fragment
     - Created job card view
     - Set job card view to 2 per row while I fix dimensions
