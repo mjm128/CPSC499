@@ -13,4 +13,8 @@
     <!-- Job Card Colors -->
     <color name="job_card_viewBg">#00FFFFFF</color>
 
+    <!-- New Record Tabs -->
+    <color name="navigationBarColor">#000000</color>
+    <color name="navigationColorAccent">#C8E8FF</color>
+
 </resources>

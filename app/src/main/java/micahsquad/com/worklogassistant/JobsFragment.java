@@ -81,7 +81,7 @@ public class JobsFragment extends Fragment {
             public void onClick(View view, int position) {
                 Job job = jobsList.get(position);
                 Toast.makeText(getActivity().getApplicationContext(), job.getJobId() + " is selected!", Toast.LENGTH_SHORT).show();
-                view.getContext().startActivity(new Intent(view.getContext(),CreateJobActivity.class));
+                view.getContext().startActivity(new Intent(view.getContext(), CreateRecordActivity.class));
             }
 
             @Override
@@ -200,7 +200,6 @@ public class JobsFragment extends Fragment {
             */
         }
     }
-
 
     // Converting dp to pixel
     private int dpToPx(int dp) {

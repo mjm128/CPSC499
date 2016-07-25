@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateJobActivity"></activity>
+        <activity android:name=".CreateRecordActivity"></activity>
     </application>
 
 </manifest>
