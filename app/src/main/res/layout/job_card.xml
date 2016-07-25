@@ -36,18 +36,33 @@
                 android:paddingRight="@dimen/job_title_padding"
                 android:paddingTop="10dp"
                 android:textColor="@color/jobs_title"
-                android:textSize="@dimen/job_title" />
+                android:textSize="@dimen/job_title"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
             <TextView
-                android:id="@+id/count"
-                android:layout_width="match_parent"
+                android:id="@+id/position"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
-                android:paddingBottom="@dimen/position_count_padding_bottom"
+                android:paddingBottom="@dimen/position_padding_bottom"
                 android:paddingLeft="@dimen/job_title_padding"
-                android:paddingRight="@dimen/job_title_padding"
-                android:textSize="@dimen/position_count"
+                android:paddingRight="15dp"
+                android:textSize="@dimen/position"
+                android:textColor="#FF757575"
                 android:layout_toRightOf="@id/item_letter"/>
+
+            <TextView
+                android:id="@+id/pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:paddingRight="@dimen/job_title_padding"
+                android:textSize="@dimen/position"
+                android:textColor="#FF43A047"
+                android:layout_toRightOf="@id/position"
+                android:layout_alignBottom="@id/position"/>
 
             <ImageView
                 android:id="@+id/overflow"

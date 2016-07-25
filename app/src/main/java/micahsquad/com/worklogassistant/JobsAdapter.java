@@ -1,16 +1,23 @@
 package micahsquad.com.worklogassistant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -18,22 +25,26 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import java.text.DecimalFormat;
 
 import java.util.List;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
+
 /**
  * Created by Micah on 7/20/2016.
  */
 public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> {
     private Context mContext;
     private List<Job> jobList;
-    String letter, nextLetter;
+    String letter;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, count;
+        public TextView title, positionAndPay;
         public ImageView itemletter, overflow;
+
 
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
-            count = (TextView) view.findViewById(R.id.count);
+            positionAndPay = (TextView) view.findViewById(R.id.position);
             itemletter = (ImageView) view.findViewById(R.id.item_letter);
             overflow = (ImageView) view.findViewById(R.id.overflow);
         }
@@ -53,12 +64,21 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         DecimalFormat formater = new DecimalFormat("0.00#");
-        Job job = jobList.get(position);
-        holder.title.setText(job.getName());
-        holder.count.setText(job.getPosition() + " - $" + formater.format(job.getPay()));
+        final Job job = jobList.get(position);
 
+        SpannableStringBuilder positionAndPay = new SpannableStringBuilder();
+        positionAndPay.append(job.getPosition());
+        int boldStart = positionAndPay.length();
+        positionAndPay.append("  ");
+        positionAndPay.setSpan(new ForegroundColorSpan(0xFF212121), boldStart, positionAndPay.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        boldStart = positionAndPay.length();
+        positionAndPay.append("$" + formater.format(job.getPay()));
+        positionAndPay.setSpan(new ForegroundColorSpan(0xFF43A047), boldStart, positionAndPay.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        holder.title.setText(job.getName());
+        holder.positionAndPay.setText(positionAndPay);
 
         //Code to get gmail like character icons
         letter = String.valueOf(job.getName().charAt(0));
@@ -99,6 +119,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
                 case R.id.action_job_delete:
                     WorkLogDB db = new WorkLogDB(mContext);
                     //db.deleteJob();
+
                     Toast.makeText(mContext, "Delete Job", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
@@ -110,5 +131,9 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
     @Override
     public int getItemCount() {
         return jobList.size();
+    }
+
+    public void removeItem(){
+
     }
 }

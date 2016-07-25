@@ -2,13 +2,16 @@ package micahsquad.com.worklogassistant;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.content.res.Resources;
@@ -25,6 +28,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,14 +76,25 @@ public class JobsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Job job = jobsList.get(position);
+                Toast.makeText(getActivity().getApplicationContext(), job.getJobId() + " is selected!", Toast.LENGTH_SHORT).show();
+                view.getContext().startActivity(new Intent(view.getContext(),CreateJobActivity.class));
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
         prepareJobs();
-
-
     }
 
-    /**
-     * Adding few albums for testing
-     */
+
+    // Add jobs
     private void prepareJobs() {
         int numOfJobs = c.getCount();
         c.moveToFirst();
@@ -87,6 +102,7 @@ public class JobsFragment extends Fragment {
 
         for (int i=0; i<numOfJobs; i++){
             Job a = new Job();
+            a.setJobId(c.getInt(c.getColumnIndex("jobid")));
             a.setName(c.getString((c.getColumnIndex("jobname"))));
             a.setPosition(c.getString((c.getColumnIndex("jobposition"))));
             a.setPay(c.getDouble((c.getColumnIndex("jobpay"))));
@@ -98,10 +114,56 @@ public class JobsFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    public interface ClickListener {
+        void onClick(View view, int position);
 
-    /**
-     * RecyclerView item decoration - give equal margin around grid item
-     */
+        void onLongClick(View view, int position);
+    }
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+
+        private GestureDetector gestureDetector;
+        private JobsFragment.ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final JobsFragment.ClickListener clickListener) {
+            this.clickListener = clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    if (child != null && clickListener != null) {
+                        clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+                clickListener.onClick(child, rv.getChildAdapterPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    }
+
+    // RecyclerView item decoration - give equal margin around grid item
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
         private int spanCount;
@@ -139,11 +201,14 @@ public class JobsFragment extends Fragment {
         }
     }
 
-    /**
-     * Converting dp to pixel
-     */
+
+    // Converting dp to pixel
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
+
+    public void refreshList(){
+        prepareJobs();
     }
 }

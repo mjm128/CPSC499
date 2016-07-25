@@ -13,7 +13,8 @@ public class Job {
 
     }
 
-    public Job(String name, String position, Double pay){
+    public Job(int jobid, String name, String position, Double pay){
+        this.jobid = jobid;
         this.name = name;
         this.position = position;
         this.pay = pay;

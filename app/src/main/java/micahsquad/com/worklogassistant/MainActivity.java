@@ -69,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onClick(View view) {
                         long job_id = extras.getLong("jobId");
+
+                        FragmentManager fragment = getFragmentManager();
+                        JobsFragment jobs = (JobsFragment)fragment.findFragmentByTag("JOBS");
+                        jobs.refreshList();
+
                         db = new WorkLogDB(context);
                         db.deleteJob(job_id);
                         Snackbar snackbar1 = Snackbar.make(view, "Job has been deleted", Snackbar.LENGTH_LONG);
@@ -134,16 +139,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_jobs_layout) {
             // Handle the camera action
-            fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment()).commit();
+            fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment(), "JOBS").commit();
             fab.show();
         } else if (id == R.id.nav_recent_layout) {
-            fragment.beginTransaction().replace(R.id.content_frame, new RecentFragment()).commit();
+            fragment.beginTransaction().replace(R.id.content_frame, new RecentFragment(), "RECENT").commit();
             fab.hide();
         } else if (id == R.id.nav_search_layout) {
-            fragment.beginTransaction().replace(R.id.content_frame, new SearchFragment()).commit();
+            fragment.beginTransaction().replace(R.id.content_frame, new SearchFragment(), "SEARCH").commit();
             fab.hide();
         } else if (id == R.id.nav_statistics_layout) {
-            fragment.beginTransaction().replace(R.id.content_frame, new StatisticsFragment()).commit();
+            fragment.beginTransaction().replace(R.id.content_frame, new StatisticsFragment(), "STATISTICS").commit();
             fab.hide();
         } else if (id == R.id.export_import) {
 
