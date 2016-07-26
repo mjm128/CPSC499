@@ -1,7 +1,10 @@
 ============================== Known Bugs / Missing Features ==============================
 
++ Add in delete / edit functions to the job cardviews (7/25/2016)
++ Fix job cardview going to create new record even if pressed on the 3 dot menu (7/25/2016)
 + Fix new job layout so that pressing next on keyboard doesn't go to select the button (7/19/2016)
 + Set snackbar action text to bold (7/19/2016)
 
+- Fix deleting job via undo in snackbar not updating the recycleview (7/25/2016) FIXED: (7/26/2016)
 - Main Activity doesn't highlight Jobs menu option on launch (7/11/2016) FIXED: (7/19/2016)
 - Need to add an undo to Snackbar for job creation to delete job (7/16/2016) FIXED: (7/19/2016)

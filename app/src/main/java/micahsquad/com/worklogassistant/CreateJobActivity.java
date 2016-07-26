@@ -62,8 +62,6 @@ public class CreateJobActivity extends AppCompatActivity  {
                 submitNewJob();
             }
         });
-
-
     }
 
     @Override

@@ -34,11 +34,15 @@ import static android.support.v4.app.ActivityCompat.startActivity;
 public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> {
     private Context mContext;
     private List<Job> jobList;
+    private LayoutInflater inflater;
+    private int previousPosition = 0;
     String letter;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, positionAndPay;
         public ImageView itemletter, overflow;
+        private Job job;
 
 
         public MyViewHolder(View view) {
@@ -53,6 +57,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
     public JobsAdapter(Context mContext, List<Job> jobList) {
         this.mContext = mContext;
         this.jobList = jobList;
+        inflater = LayoutInflater.from(mContext);
     }
 
     @Override
@@ -79,6 +84,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
 
         holder.title.setText(job.getName());
         holder.positionAndPay.setText(positionAndPay);
+        holder.job = job;
 
         //Code to get gmail like character icons
         letter = String.valueOf(job.getName().charAt(0));
@@ -86,28 +92,32 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
         TextDrawable drawable = TextDrawable.builder().buildRect(letter, generator.getColor(job.getName()));
         holder.itemletter.setImageDrawable(drawable);
 
+        final int currentPosition = position;
+
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopupMenu(holder.overflow);
+                showPopupMenu(holder.overflow, job);
             }
         });
     }
 
     // Showing popup menu when tapping on 3 dots
-    private void showPopupMenu(View view) {
+    private void showPopupMenu(View view, Job job) {
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_job, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(job));
         popup.show();
     }
 
-    // * Click listener for popup menu items
+    // Click listener for popup menu items
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+        private Job job;
 
-        public MyMenuItemClickListener() {
+        public MyMenuItemClickListener(Job job) {
+            this.job = job;
         }
 
         @Override
@@ -118,8 +128,8 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
                     return true;
                 case R.id.action_job_delete:
                     WorkLogDB db = new WorkLogDB(mContext);
-                    //db.deleteJob();
-
+                    db.deleteJob(job.getJobId());
+                    removeItem(job);
                     Toast.makeText(mContext, "Delete Job", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
@@ -133,7 +143,21 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
         return jobList.size();
     }
 
-    public void removeItem(){
+    public void removeItem(Job information){
+        int position = jobList.indexOf(information);
+        jobList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void removeItem(int job_id) {
+        Job element;
+        for (int i = 0; i < jobList.size(); i++){
+            element = jobList.get(i);
+            if (element.getJobId() == job_id){
+                removeItem(element);
+                return;
+            }
+        }
 
     }
 }

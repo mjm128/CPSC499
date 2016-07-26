@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         FragmentManager fragment = getFragmentManager();
                         JobsFragment jobs = (JobsFragment)fragment.findFragmentByTag("JOBS");
-                        jobs.refreshList();
+                        jobs.delete((int) job_id);
 
                         db = new WorkLogDB(context);
                         db.deleteJob(job_id);

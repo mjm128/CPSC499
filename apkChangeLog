@@ -1,5 +1,11 @@
 ============================== APK Change Log ==============================
 
+----- Version 0.08 (7/26/2016) -----
+    - Added clicking on a job to add a new record
+    - Added a starting layout to the new record activity/fragments
+    - Added deleting job from recycler view + db using overflow
+    - Added deleting job from snackbar undo action button
+
 ----- Version 0.07 (7/23/2016) -----
     - Added GMAIL like letter icon images to the job card
     - Changed the dimensions of the card and layout for a much better looking list

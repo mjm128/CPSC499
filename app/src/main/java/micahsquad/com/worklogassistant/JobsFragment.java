@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -79,6 +80,7 @@ public class JobsFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                Log.e(view.getClass().getName(), "Testing");
                 Job job = jobsList.get(position);
                 Toast.makeText(getActivity().getApplicationContext(), job.getJobId() + " is selected!", Toast.LENGTH_SHORT).show();
                 view.getContext().startActivity(new Intent(view.getContext(), CreateRecordActivity.class));
@@ -147,7 +149,7 @@ public class JobsFragment extends Fragment {
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 
             View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e))  {
                 clickListener.onClick(child, rv.getChildAdapterPosition(child));
             }
             return false;
@@ -207,7 +209,7 @@ public class JobsFragment extends Fragment {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
-    public void refreshList(){
-        prepareJobs();
+    public void delete(int job_id) {
+       adapter.removeItem(job_id);
     }
 }
