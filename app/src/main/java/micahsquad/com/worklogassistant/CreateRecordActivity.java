@@ -29,7 +29,8 @@ public class CreateRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_record);
 
-        getSupportActionBar().setTitle("New Job");
+        getSupportActionBar().setTitle("New Record");
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setHomeButtonEnabled(true);;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
