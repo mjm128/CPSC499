@@ -10,8 +10,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="@dimen/job_card_margin"
-        android:elevation="20dp"
-        android:clickable="true">
+        android:elevation="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -71,7 +70,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/ic_job_overflow_margin_top"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_more_vert_black_24dp" />
+                android:src="@drawable/ic_more_vert_black_24dp"
+                android:clickable="true"/>
 
         </RelativeLayout>
 
