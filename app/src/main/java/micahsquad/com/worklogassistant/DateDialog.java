@@ -16,7 +16,7 @@ import java.util.Locale;
  */
 public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
 
-    EditText date, startTime, endTime;
+    EditText date;
 
     public DateDialog(){
 
@@ -24,8 +24,6 @@ public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDa
 
     public DateDialog(View view){
         date = (EditText) view;
-        startTime = (EditText) view;
-        endTime = (EditText) view;
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -38,6 +36,7 @@ public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDa
         return new DatePickerDialog(getActivity(), this,year,month,day);
     }
 
+    @Override
     public void onDateSet(DatePicker view, int year, int month, int day){
         String dateString = month + "/" + day + "/" + year;
         date.setText(dateString);

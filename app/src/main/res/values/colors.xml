@@ -3,7 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#00BFA5</color>
-    <color name="grey">#EEEEEE</color>
+    <color name="lightPrimary">#2196F3</color>
+
 
     <!-- Text Input Card Styling -->
     <color name="card_grey">#FF999999</color>

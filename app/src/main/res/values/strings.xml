@@ -16,7 +16,7 @@
     <string name="action_job_delete">Delete</string>
 
     <!-- Create New Record String -->
-    <string name="hint_record_date">New Record Date</string>
+    <string name="hint_record_date">Record Date</string>
     <string name="hint_record_startTime">Start Time</string>
     <string name="hint_record_endTime">End Time</string>
 

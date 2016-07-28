@@ -35,6 +35,7 @@ public class TimeCardFragment extends Fragment {
     public void onStart() {
         super.onStart();
         final EditText date = (EditText) getActivity().findViewById(R.id.input_record_date);
+        final EditText startTime = (EditText) getActivity().findViewById(R.id.input_record_startTime);
         //Set up TextInput
         inputRecordDate = (TextInputLayout) getActivity().findViewById(R.id.input_layout_record_date);
 
@@ -44,11 +45,19 @@ public class TimeCardFragment extends Fragment {
                     DateDialog dialog = new DateDialog(v);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     dialog.show(ft, "DatePicker");
-
             }
         });
+        startTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                TimeDialog dialog = new TimeDialog(v);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                dialog.show(ft, "TimePicker");
+            }
+        });
+
         if (date.getText().toString() != ""){
-            date.setTextColor(0xFF00BFA5);
+            date.setTextColor(0xFFFFFFFF);
         }
 
     }
