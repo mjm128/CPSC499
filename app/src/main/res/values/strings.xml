@@ -20,5 +20,8 @@
     <string name="hint_record_startTime">Start Time</string>
     <string name="hint_record_endTime">End Time</string>
 
+    <!-- Record Menu String -->
+    <string name="record_action_done">Done</string>
+
 
 </resources>
