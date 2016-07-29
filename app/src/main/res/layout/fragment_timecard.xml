@@ -19,7 +19,7 @@
             android:id="@+id/input_layout_record_startTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
+            android:paddingTop="5dp"
             android:layout_weight="1">
 
             <EditText
@@ -39,7 +39,7 @@
             android:id="@+id/input_layout_record_endTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
+            android:paddingTop="5dp"
             android:layout_weight="1">
 
             <EditText

@@ -1,6 +1,7 @@
 package micahsquad.com.worklogassistant;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -9,11 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import java.util.Calendar;
+
 /**
  * Created by Micah on 7/25/2016.
  */
-public class TimeCardFragment extends Fragment {
+public class TimeCardFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
     TextInputLayout inputRecordDate;
+    EditText date, startTime, endTime;
+    String dateString, startString, endString;
+
+    DateDialog dateDialog;
+    TimeDialog timeDialog;
+    FragmentTransaction ft;
 
 
     public TimeCardFragment() {
@@ -34,27 +43,20 @@ public class TimeCardFragment extends Fragment {
 
     public void onStart() {
         super.onStart();
-        final EditText date = (EditText) getActivity().findViewById(R.id.input_record_date);
-        final EditText startTime = (EditText) getActivity().findViewById(R.id.input_record_startTime);
-        //Set up TextInput
-        inputRecordDate = (TextInputLayout) getActivity().findViewById(R.id.input_layout_record_date);
+        date = (EditText) getActivity().findViewById(R.id.input_record_date);
+        startTime = (EditText) getActivity().findViewById(R.id.input_record_startTime);
+        endTime = (EditText) getActivity().findViewById(R.id.input_record_endTime);
 
-        date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                    DateDialog dialog = new DateDialog(v);
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    dialog.show(ft, "DatePicker");
-            }
-        });
-        startTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                TimeDialog dialog = new TimeDialog(v);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                dialog.show(ft, "TimePicker");
-            }
-        });
+
+        date.setOnClickListener(this);
+        startTime.setOnClickListener(this);
+        endTime.setOnClickListener(this);
+        date.setOnLongClickListener(this);
+        startTime.setOnLongClickListener(this);
+        endTime.setOnLongClickListener(this);
+
+        defaultDateAndStart(500);
+
 
         if (date.getText().toString() != ""){
             date.setTextColor(0xFFFFFFFF);
@@ -62,6 +64,63 @@ public class TimeCardFragment extends Fragment {
 
     }
 
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()){
+            case R.id.input_record_date:
+                dateDialog = new DateDialog(view);
+                ft = getFragmentManager().beginTransaction();
+                dateDialog.show(ft, "DatePicker");
+                return;
+            case R.id.input_record_startTime:
+                timeDialog = new TimeDialog(view);
+                ft = getFragmentManager().beginTransaction();
+                timeDialog.show(ft, "TimePicker");
+                return;
+            case R.id.input_record_endTime:
+                timeDialog = new TimeDialog(view);
+                ft = getFragmentManager().beginTransaction();
+                timeDialog.show(ft, "TimePicker");
+                return;
+        }
+        return;
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        switch (view.getId()){
+            case R.id.input_record_date:
+                date.getText().clear();
+                return true;
+            case R.id.input_record_startTime:
+                startTime.getText().clear();
+                return true;
+            case R.id.input_record_endTime:
+                endTime.getText().clear();
+                return true;
+        }
+
+        return false;
+    }
+
+    public void defaultDateAndStart(int millisecondDelay){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dateDialog = new DateDialog(false);
+                if (date.getText().toString().length() == 0){
+                    date.setText(dateDialog.getRecordDate());
+                    dateString = dateDialog.getTimeStamp();
+                }
+                if (startTime.getText().toString().length() == 0) {
+                    startTime.setText(dateDialog.getRecordTime());
+                    startString = dateDialog.getTimeStamp();
+                }
+            }
+        }, millisecondDelay);
+    }
 }
 
 
