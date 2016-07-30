@@ -10,19 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Micah on 7/25/2016.
  */
 public class TimeCardFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
-    TextInputLayout inputRecordDate;
     EditText date, startTime, endTime;
     String dateString, startString, endString;
 
     DateDialog dateDialog;
     TimeDialog timeDialog;
     FragmentTransaction ft;
+
+    SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    SimpleDateFormat displayTimeFormat = new SimpleDateFormat("M/d/yyyy h:mm a");
+    SimpleDateFormat displayDateFormat = new SimpleDateFormat("E, MMMM d, yyyy");
 
 
     public TimeCardFragment() {
@@ -47,7 +51,6 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
         startTime = (EditText) getActivity().findViewById(R.id.input_record_startTime);
         endTime = (EditText) getActivity().findViewById(R.id.input_record_endTime);
 
-
         date.setOnClickListener(this);
         startTime.setOnClickListener(this);
         endTime.setOnClickListener(this);
@@ -56,12 +59,6 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
         endTime.setOnLongClickListener(this);
 
         defaultDateAndStart(500);
-
-
-        if (date.getText().toString() != ""){
-            date.setTextColor(0xFFFFFFFF);
-        }
-
     }
 
     @Override
@@ -109,15 +106,10 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                dateDialog = new DateDialog(false);
-                if (date.getText().toString().length() == 0){
-                    date.setText(dateDialog.getRecordDate());
-                    dateString = dateDialog.getTimeStamp();
-                }
-                if (startTime.getText().toString().length() == 0) {
-                    startTime.setText(dateDialog.getRecordTime());
-                    startString = dateDialog.getTimeStamp();
-                }
+                Date d = new Date();
+                date.setText(displayDateFormat.format(d));
+                startTime.setText(displayTimeFormat.format(d));
+
             }
         }, millisecondDelay);
     }
