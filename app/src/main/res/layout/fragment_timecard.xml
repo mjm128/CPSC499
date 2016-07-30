@@ -26,7 +26,7 @@
                 android:id="@+id/input_record_startTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
+                android:inputType="none|textNoSuggestions"
                 android:focusable="false"
                 android:longClickable="false"
                 android:singleLine="true"
@@ -46,10 +46,11 @@
                 android:id="@+id/input_record_endTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
+                android:inputType="none|textNoSuggestions"
                 android:focusable="false"
                 android:longClickable="false"
                 android:hint="@string/hint_record_endTime" />
+
 
         </android.support.design.widget.TextInputLayout>
 
