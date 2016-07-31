@@ -2,8 +2,11 @@ package micahsquad.com.worklogassistant;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,6 +20,7 @@ import java.util.Calendar;
  */
 public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
 
+    View view;
     EditText date;
     SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     SimpleDateFormat displayDateFormat = new SimpleDateFormat("E, MMMM d, yyyy");
@@ -44,6 +48,15 @@ public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDa
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        super.onCreateDialog(savedInstanceState);
+        setRetainInstance(true);
+        if(savedInstanceState!=null)
+        {
+            date = (EditText) getActivity().findViewById(savedInstanceState.getInt("date_id"));
+
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
         final Calendar c = Calendar.getInstance();
         if (hasDate == false) {
             year = c.get(Calendar.YEAR);
@@ -79,5 +92,20 @@ public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDa
             }
         }
         date.setText(dateString);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (getDialog() != null && getRetainInstance()) {
+            getDialog().setDismissMessage(null);
+        }
+        super.onDestroyView();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        savedInstanceState.putInt("date_id", date.getId());
     }
 }
