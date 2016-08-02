@@ -11,7 +11,8 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/job_card_margin"
         android:clickable="true"
-        android:elevation="20dp">
+        android:elevation="20dp"
+        android:background="?attr/selectableItemBackground">
 
         <RelativeLayout
             android:layout_width="match_parent"

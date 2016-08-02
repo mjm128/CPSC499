@@ -2,6 +2,7 @@ package micahsquad.com.worklogassistant;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +18,7 @@ import java.util.Date;
  * Created by Micah on 7/25/2016.
  */
 public class TimeCardFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
-    EditText date, startTime, endTime;
+    TextInputEditText date, startTime, endTime;
     String dateString, startString, endString;
 
     DateDialog dateDialog;
@@ -49,9 +50,9 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
 
     public void onStart() {
         super.onStart();
-        date = (EditText) getActivity().findViewById(R.id.input_record_date);
-        startTime = (EditText) getActivity().findViewById(R.id.input_record_startTime);
-        endTime = (EditText) getActivity().findViewById(R.id.input_record_endTime);
+        date = (TextInputEditText) getActivity().findViewById(R.id.input_record_date);
+        startTime = (TextInputEditText) getActivity().findViewById(R.id.input_record_startTime);
+        endTime = (TextInputEditText) getActivity().findViewById(R.id.input_record_endTime);
 
         date.setOnClickListener(this);
         startTime.setOnClickListener(this);
