@@ -26,32 +26,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "jobid INTEGER PRIMARY KEY AUTOINCREMENT," +
             "jobname TEXT," +
             "jobposition TEXT," +
-            "jobpay REAL);";
+            "jobpay REAL," +
+            "timerounding INTEGER);";
 
     //Table timecards
     public static final String TIME_CARDS_CREATE_TABLE =
             "CREATE TABLE timecards (" +
             "shiftid INTEGER PRIMARY KEY AUTOINCREMENT," +
             "jobid INTEGER NOT NULL," +
-            "shiftdate INTEGER," +
-            "starttime INTEGER," +
-            "endtime INTEGER," +
+            "shiftdate TEXT," +
+            "starttime TEXT," +
+            "endtime TEXT," +
             "payrate REAL," +
             "timeworked REAL," +
             "shiftpay REAL," +
             "totalpay REAL," +
-            "first_breakstart INTEGER," +
-            "first_breakend INTEGER," +
-            "second_breakstart INTEGER," +
-            "second_breakend INTEGER," +
-            "third_breakstart INTEGER," +
-            "third_breakend INTEGER," +
-            "fourth_breakstart INTEGER," +
+            "first_breakstart TEXT," +
+            "first_breakend TEXT," +
+            "second_breakstart TEXT," +
+            "second_breakend TEXT," +
+            "third_breakstart TEXT," +
+            "third_breakend TEXT," +
+            "fourth_breakstart TEXT," +
             "fourth_breakend INTEGER," +
-            "first_lunchstart INTEGER," +
-            "first_lunchend INTEGER," +
-            "second_lunchstart INTEGER," +
-            "second_lunchend INTEGER," +
+            "first_lunchstart TEXT," +
+            "first_lunchend TEXT," +
+            "second_lunchstart TEXT," +
+            "second_lunchend TEXT," +
             "comment TEXT," +
             "FOREIGN KEY(jobid) REFERENCES jobs(jobid) ON DELETE CASCADE);";
 
@@ -67,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "totalrevenue REAL," +
             "totaltip REAL," +
             "tippercent REAL," +
+            "tip_comment TEXT," +
             "FOREIGN KEY(shiftid) REFERENCES timecards(shiftid) ON DELETE CASCADE);";
 
 
