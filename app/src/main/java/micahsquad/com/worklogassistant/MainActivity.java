@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         db.deleteJob(job_id);
                         Snackbar snackbar1 = Snackbar.make(view, "Job has been deleted", Snackbar.LENGTH_LONG);
                         snackbar1.show();
+                        getIntent().removeExtra("jobName");
                     }
 
                 });
