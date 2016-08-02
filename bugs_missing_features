@@ -1,5 +1,6 @@
 ============================== Known Bugs / Missing Features ==============================
 
++ EditText added is not a TextInputEditText. Please switch to using that class instead. (8/1/2016)
 + Add in delete / edit functions to the job cardviews (7/25/2016)
 + Fix job cardview going to create new record even if pressed on the 3 dot menu (7/25/2016)
 + Fix new job layout so that pressing next on keyboard doesn't go to select the button (7/19/2016)
