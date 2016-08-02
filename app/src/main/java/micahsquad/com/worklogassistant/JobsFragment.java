@@ -77,7 +77,7 @@ public class JobsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new ClickListener() {
+        /*recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Log.e(view.getClass().getName(), "Testing");
@@ -90,7 +90,7 @@ public class JobsFragment extends Fragment {
             public void onLongClick(View view, int position) {
 
             }
-        }));
+        }));*/
 
         prepareJobs();
     }
@@ -116,7 +116,7 @@ public class JobsFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    public interface ClickListener {
+    /*public interface ClickListener {
         void onClick(View view, int position);
 
         void onLongClick(View view, int position);
@@ -163,7 +163,7 @@ public class JobsFragment extends Fragment {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-    }
+    }*/
 
     // RecyclerView item decoration - give equal margin around grid item
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {

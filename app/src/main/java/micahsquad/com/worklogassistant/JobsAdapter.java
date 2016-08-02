@@ -8,6 +8,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,14 +35,13 @@ import static android.support.v4.app.ActivityCompat.startActivity;
 public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> {
     private Context mContext;
     private List<Job> jobList;
-    private LayoutInflater inflater;
-    private int previousPosition = 0;
     String letter;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, positionAndPay;
         public ImageView itemletter, overflow;
+        View cardview;
         private Job job;
 
 
@@ -51,13 +51,13 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
             positionAndPay = (TextView) view.findViewById(R.id.position);
             itemletter = (ImageView) view.findViewById(R.id.item_letter);
             overflow = (ImageView) view.findViewById(R.id.overflow);
+            cardview = (View) view.findViewById(R.id.card_view);
         }
     }
 
     public JobsAdapter(Context mContext, List<Job> jobList) {
         this.mContext = mContext;
         this.jobList = jobList;
-        inflater = LayoutInflater.from(mContext);
     }
 
     @Override
@@ -92,12 +92,19 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
         TextDrawable drawable = TextDrawable.builder().buildRect(letter, generator.getColor(job.getName()));
         holder.itemletter.setImageDrawable(drawable);
 
-        final int currentPosition = position;
-
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPopupMenu(holder.overflow, job);
+            }
+        });
+
+        holder.cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e(view.getClass().getName(), "Testing");
+                Toast.makeText(mContext, job.getJobId() + " is selected!", Toast.LENGTH_SHORT).show();
+                view.getContext().startActivity(new Intent(view.getContext(), CreateRecordActivity.class));
             }
         });
     }
