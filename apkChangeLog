@@ -1,5 +1,13 @@
 ============================== APK Change Log ==============================
 
+----- Version 0.09 (8/2/2016) -----
+    - Added Create Record activity
+    - Added the fragments for both timecard and tip (maybe add one for shift pay? time rounding?)
+    - Added in TimePicker and DatePicker
+    - Fixed issue with the Jobs recycleview clicking the overflow item and the full view
+    - Fixed issue with duplicate Snackbar job deletion on multitasking
+    - Fixed EditText warning
+
 ----- Version 0.08 (7/26/2016) -----
     - Added clicking on a job to add a new record
     - Added a starting layout to the new record activity/fragments
