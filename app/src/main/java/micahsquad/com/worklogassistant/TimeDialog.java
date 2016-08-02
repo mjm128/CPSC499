@@ -29,6 +29,9 @@ public class TimeDialog extends DialogFragment implements  TimePickerDialog.OnTi
     int year, month, day, hour, minute;
     boolean hasTime;
 
+    private TimePickerDialog timePickerDialog;
+    private final static String SAVED_PICKER_STATE = "CoreTimePickerDialogFragment.internal_state";
+
     public TimeDialog(){
 
     }
@@ -47,6 +50,18 @@ public class TimeDialog extends DialogFragment implements  TimePickerDialog.OnTi
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState){
+        super.onCreateDialog(savedInstanceState);
+        setRetainInstance(true);
+
+        final TimePickerDialog dialog = new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
+        if (savedInstanceState != null) {
+            final Bundle internalState = savedInstanceState.getBundle(SAVED_PICKER_STATE);
+            dialog.onRestoreInstanceState(internalState);
+            time = (EditText) getActivity().findViewById(savedInstanceState.getInt("time_id"));
+            timePickerDialog = dialog;
+            return dialog;
+        }
+
         final Calendar c = Calendar.getInstance();
         if (hasTime == false) {
             year = c.get(Calendar.YEAR);
@@ -62,7 +77,9 @@ public class TimeDialog extends DialogFragment implements  TimePickerDialog.OnTi
             minute = Integer.parseInt(timeString.substring(14, 16));
         }
 
-        return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
+        TimePickerDialog dialog1 = new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
+        timePickerDialog = dialog1;
+        return dialog1;
     }
 
     @Override
@@ -77,6 +94,24 @@ public class TimeDialog extends DialogFragment implements  TimePickerDialog.OnTi
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         timeDateDialog.show(ft, "TimeDatePicker");
     }
+
+    @Override
+    public void onDestroyView() {
+        if (getDialog() != null && getRetainInstance()) {
+            getDialog().setDismissMessage(null);
+        }
+        super.onDestroyView();
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        final Bundle bundle = timePickerDialog.onSaveInstanceState();
+        outState.putInt("time_id", time.getId());
+        outState.putBundle(SAVED_PICKER_STATE, bundle);
+    }
 }
 
 class TimeDateDialog extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
@@ -85,7 +120,11 @@ class TimeDateDialog extends DialogFragment implements  DatePickerDialog.OnDateS
     SimpleDateFormat displayTimeFormat = new SimpleDateFormat("M/d/yyyy h:mm a");
     EditText time;
     boolean hasTime = false;
-    int hour, minute;
+    int year, month, day, hour, minute;
+
+
+    private DatePickerDialog datePickerDialog;
+    private final static String SAVED_PICKER_STATE = "CoreDatePickerDialogFragment.internal_state";
 
     public TimeDateDialog(View view, String s, int hrs, int mnts) {
         time = (EditText) view;
@@ -95,6 +134,18 @@ class TimeDateDialog extends DialogFragment implements  DatePickerDialog.OnDateS
     }
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        super.onCreateDialog(savedInstanceState);
+        setRetainInstance(true);
+
+        final DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+        if (savedInstanceState != null) {
+            final Bundle internalState = savedInstanceState.getBundle(SAVED_PICKER_STATE);
+            dialog.onRestoreInstanceState(internalState);
+            time = (EditText) getActivity().findViewById(savedInstanceState.getInt("time_id"));
+            datePickerDialog = dialog;
+            return dialog;
+        }
+
         Calendar c = Calendar.getInstance();
         int year = Integer.parseInt(timeString.substring(0, 4));
         int month = Integer.parseInt(timeString.substring(5, 7))-1;
@@ -102,7 +153,10 @@ class TimeDateDialog extends DialogFragment implements  DatePickerDialog.OnDateS
         int hour = Integer.parseInt(timeString.substring(11, 13));
         int minute = Integer.parseInt(timeString.substring(14, 16));
 
-        return new DatePickerDialog(getActivity(), this,year,month,day);
+        final DatePickerDialog dialog1 = new DatePickerDialog(getActivity(), this, year, month, day);
+        datePickerDialog = dialog1;
+
+        return dialog1;
     }
 
     @Override
@@ -115,4 +169,22 @@ class TimeDateDialog extends DialogFragment implements  DatePickerDialog.OnDateS
         time.setText(timeString);
     }
 
+    @Override
+    public void onDestroyView() {
+        if (getDialog() != null && getRetainInstance()) {
+            getDialog().setDismissMessage(null);
+        }
+        super.onDestroyView();
+
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        final Bundle bundle = datePickerDialog.onSaveInstanceState();
+        outState.putInt("time_id", time.getId());
+        outState.putBundle(SAVED_PICKER_STATE, bundle);
+    }
 }

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
@@ -20,7 +21,6 @@ import java.util.Calendar;
  */
 public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDateSetListener {
 
-    View view;
     EditText date;
     SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     SimpleDateFormat displayDateFormat = new SimpleDateFormat("E, MMMM d, yyyy");
@@ -28,7 +28,8 @@ public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDa
 
     int year, month, day;
     boolean hasDate = false;
-
+    private DatePickerDialog datePickerDialog;
+    private final static String SAVED_PICKER_STATE = "CoreDatePickerDialogFragment.internal_state";
 
     public DateDialog() {
 
@@ -50,11 +51,14 @@ public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDa
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         setRetainInstance(true);
-        if(savedInstanceState!=null)
-        {
-            date = (EditText) getActivity().findViewById(savedInstanceState.getInt("date_id"));
 
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+        final DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+        if (savedInstanceState != null) {
+            final Bundle internalState = savedInstanceState.getBundle(SAVED_PICKER_STATE);
+            dialog.onRestoreInstanceState(internalState);
+            date = (EditText) getActivity().findViewById(savedInstanceState.getInt("date_id"));
+            datePickerDialog = dialog;
+            return dialog;
         }
 
         final Calendar c = Calendar.getInstance();
@@ -69,7 +73,9 @@ public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDa
             day = Integer.parseInt(dateString.substring(8, 10));
         }
 
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+        final DatePickerDialog dialog1 = new DatePickerDialog(getActivity(), this, year, month, day);
+        datePickerDialog = dialog1;
+        return dialog1;
     }
 
     @Override
@@ -104,8 +110,11 @@ public class DateDialog extends DialogFragment implements  DatePickerDialog.OnDa
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState)
+    public void onSaveInstanceState(Bundle outState)
     {
-        savedInstanceState.putInt("date_id", date.getId());
+        super.onSaveInstanceState(outState);
+        final Bundle bundle = datePickerDialog.onSaveInstanceState();
+        outState.putInt("date_id", date.getId());
+        outState.putBundle(SAVED_PICKER_STATE, bundle);
     }
 }

@@ -42,6 +42,8 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setRetainInstance(true);
+
         return inflater.inflate(R.layout.fragment_timecard, container, false);
     }
 
@@ -107,8 +109,12 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
             @Override
             public void run() {
                 Date d = new Date();
-                date.setText(displayDateFormat.format(d));
-                startTime.setText(displayTimeFormat.format(d));
+                if (date.getText().toString().length() == 0) {
+                    date.setText(displayDateFormat.format(d));
+                }
+                if (startTime.getText().toString().length() == 0) {
+                    startTime.setText(displayTimeFormat.format(d));
+                }
 
             }
         }, millisecondDelay);
