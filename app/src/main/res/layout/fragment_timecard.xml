@@ -2,17 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="20dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
     android:paddingTop="0dp"
     tools:context="micahsquad.com.worklogassistant.TimeCardFragment">
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
+        android:id="@+id/timecard_linearlayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
         android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_below="@+id/input_layout_record_date">
 
         <android.support.design.widget.TextInputLayout
@@ -31,9 +43,7 @@
                 android:focusable="false"
                 android:longClickable="false"
                 android:singleLine="true"
-
                 android:layout_alignParentEnd="true"/>
-
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -51,8 +61,529 @@
                 android:inputType="none|textNoSuggestions"
                 android:focusable="false"
                 android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:layout_below="@+id/timecard_linearlayout1">
+        <View
+            android:id="@+id/timecard_line1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:background="@color/colorAccent"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timecard_linearlayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/timecard_linearlayout1">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_1breakStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_1breakStart">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_1breakStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:layout_alignParentEnd="true"/>
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_1breakEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_1breakEnd">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_1breakEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timecard_linearlayout3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/timecard_linearlayout2">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_1lunchStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_1lunchStart">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_1lunchStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:layout_alignParentEnd="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_1lunchEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_1lunchEnd">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_1lunchEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timecard_linearlayout4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/timecard_linearlayout3">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_2breakStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_2breakStart">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_2breakStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:layout_alignParentEnd="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_2breakEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_2breakEnd">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_2breakEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:layout_below="@+id/timecard_linearlayout4">
+            <View
+                android:id="@+id/timecard_line2"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@color/colorAccent"/>
+        </LinearLayout>
+
+    <!-- Lunch 2 -->
+    <LinearLayout
+        android:id="@+id/timecard_linearlayout5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/timecard_linearlayout4">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_2lunchStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_2lunchStart">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_2lunchStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:layout_alignParentEnd="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_2lunchEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_2lunchEnd">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_2lunchEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timecard_linearlayout6"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/timecard_linearlayout5">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_3breakStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_3breakStart">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_3breakStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:layout_alignParentEnd="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_3breakEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_4breakEnd">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_3breakEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <!-- Lunch 3 -->
+    <LinearLayout
+        android:id="@+id/timecard_linearlayout7"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/timecard_linearlayout6">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_3lunchStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_3lunchStart">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_3lunchStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:layout_alignParentEnd="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_3lunchEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_3lunchEnd">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_3lunchEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:layout_below="@+id/timecard_linearlayout7">
+            <View
+                android:id="@+id/timecard_line3"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@color/colorAccent"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timecard_linearlayout8"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/timecard_linearlayout7">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_4breakStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_4breakStart">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_4breakStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:layout_alignParentEnd="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_4breakEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_4breakEnd">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_4breakEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <!-- Lunch 4 -->
+    <LinearLayout
+        android:id="@+id/timecard_linearlayout9"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/timecard_linearlayout8">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_4lunchStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_4lunchStart">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_4lunchStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:layout_alignParentEnd="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_4lunchEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_4lunchEnd">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_4lunchEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/timecard_linearlayout10"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/timecard_linearlayout9">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_5breakStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_5breakStart">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_5breakStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"
+                android:singleLine="true"
+                android:layout_alignParentEnd="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_record_5breakEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:hint="@string/hint_record_5breakEnd">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/input_record_5breakEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none|textNoSuggestions"
+                android:focusable="false"
+                android:longClickable="false"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_below="@+id/timecard_linearlayout10">
+            <View
+                android:id="@+id/timecard_line4"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@color/colorAccent"/>
+        </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_record_base_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timecard_linearlayout10"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:hint="@string/hint_record_base_pay">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_record_base_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_record_timecard_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_layout_record_base_pay"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:hint="@string/hint_record_timecard_comment">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_record_timecard_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:lines="2"/>
+    </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+</ScrollView>
 </RelativeLayout>

@@ -7,7 +7,16 @@
     <!-- Create New Job Strings -->
     <string name="hint_job">Job Name</string>
     <string name="hint_position">Position / Title</string>
-    <string name="hint_pay">Hourly Pay ($)</string>
+    <string name="hint_pay">Base Hourly Pay</string>
+    <string-array name="time_rounding_array">
+        <item>Exact Time</item>
+        <item>Nearest 1/10th Hour</item>
+        <item>Nearest 1/4th Hour</item>
+    </string-array>
+    <string name="hint_overtime_1.5x">Overtime 1.5x Rate</string>
+    <string name="hint_overtime_2.0x">Overtime 1.5x Rate</string>
+    <string name="hint_overtime_1.5x_starttime">Overtime 1.5x Starting Time</string>
+    <string name="hint_overtime_2.0x_starttime">Overtime 2.0x Starting Time</string>
 
     <!-- Job Card Strings -->
     <color name="jobs_title">#4c4c4c</color>
@@ -19,10 +28,34 @@
     <string name="hint_record_date">Record Date</string>
     <string name="hint_record_startTime">Start Time</string>
     <string name="hint_record_endTime">End Time</string>
+    <string name="hint_record_1breakStart">Break 1: Start</string>
+    <string name="hint_record_1breakEnd">Break 1: End</string>
+    <string name="hint_record_1lunchStart">Lunch 1: Start</string>
+    <string name="hint_record_1lunchEnd">Lunch 1: End</string>
+    <string name="hint_record_2breakStart">Break 2: Start</string>
+    <string name="hint_record_2breakEnd">Break 2: End</string>
+    <string name="hint_record_2lunchStart">Lunch 2: Start</string>
+    <string name="hint_record_2lunchEnd">Lunch 2: End</string>
+    <string name="hint_record_3breakStart">Break 3: Start</string>
+    <string name="hint_record_3breakEnd">Break 3: End</string>
+    <string name="hint_record_3lunchStart">Lunch 3: Start</string>
+    <string name="hint_record_3lunchEnd">Lunch 3: End</string>
+    <string name="hint_record_4breakStart">Break 4: Start</string>
+    <string name="hint_record_4breakEnd">Break 4: End</string>
+    <string name="hint_record_4lunchStart">Lunch 4: Start</string>
+    <string name="hint_record_4lunchEnd">Lunch 4: End</string>
+    <string name="hint_record_5breakStart">Break 5: Start</string>
+    <string name="hint_record_5breakEnd">Break 5: End</string>
+    <string name="hint_record_timecard_comment">Comment</string>
+    <string name="hint_record_base_pay">Base Pay</string>
 
+    <string name="hint_record_total_tip">Total Tip</string>
     <string name="hint_record_net_sales">Net Sales</string>
-    <string name="hint_record_credit_card">Credit Card</string>
+    <string name="hint_record_credit_card">Credit Card Tip</string>
     <string name="hint_record_tax_collected">Tax Collected</string>
+    <string name="hint_record_total_revenue">Total Revenue</string>
+    <string name="hint_record_tipped_out">Tipped Out</string>
+    <string name="hint_record_tip_comment">Comment</string>
 
     <!-- Record Menu String -->
     <string name="record_action_done">Done</string>

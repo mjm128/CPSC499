@@ -49,10 +49,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "third_breakend TEXT," +
             "fourth_breakstart TEXT," +
             "fourth_breakend INTEGER," +
+            "fifth_breakstart TEXT," +
+            "fifth_breakend INTEGER," +
             "first_lunchstart TEXT," +
             "first_lunchend TEXT," +
             "second_lunchstart TEXT," +
             "second_lunchend TEXT," +
+            "third_lunchstart TEXT," +
+            "third_lunchend TEXT," +
+            "fourth_lunchstart TEXT," +
+            "fourth_lunchend TEXT," +
             "comment TEXT," +
             "FOREIGN KEY(jobid) REFERENCES jobs(jobid) ON DELETE CASCADE);";
 
