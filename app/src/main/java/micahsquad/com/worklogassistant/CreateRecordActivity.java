@@ -26,10 +26,17 @@ public class CreateRecordActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private long jobid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            jobid = extras.getLong("jobId");
+        }
+
         setContentView(R.layout.activity_create_record);
 
         getSupportActionBar().setTitle("New Record");
@@ -102,10 +109,17 @@ public class CreateRecordActivity extends AppCompatActivity {
                 this.finish();
                 return true;
             case R.id.record_done:
+                createNewRecord();
                 this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void createNewRecord(){
+        TimeCardFragment timeCardFragment;
+
+
     }
 
 }

@@ -23,8 +23,9 @@
         android:layout_height="wrap_content"
         android:weightSum="2"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:gravity="center|center_horizontal"
         android:layout_below="@+id/input_layout_record_date">
 
         <android.support.design.widget.TextInputLayout
@@ -33,6 +34,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:layout_weight="1"
+            android:textColorHint="#FF388E3C"
             android:hint="@string/hint_record_startTime">
 
             <android.support.design.widget.TextInputEditText
@@ -52,6 +54,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:layout_weight="1"
+            android:textColorHint="#FFD32F2F"
             android:hint="@string/hint_record_endTime">
 
             <android.support.design.widget.TextInputEditText
@@ -64,6 +67,7 @@
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -78,6 +82,7 @@
             android:paddingRight="5dp"
             android:background="@color/colorAccent"/>
         </LinearLayout>
+        -->
 
     <LinearLayout
         android:id="@+id/timecard_linearlayout2"
@@ -86,6 +91,7 @@
         android:weightSum="2"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:paddingTop="20dp"
         android:orientation="horizontal"
         android:layout_below="@+id/timecard_linearlayout1">
 
@@ -95,6 +101,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:layout_weight="1"
+            android:textColorHint="#FF448AFF"
             android:hint="@string/hint_record_1breakStart">
 
             <android.support.design.widget.TextInputEditText
@@ -114,6 +121,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:layout_weight="1"
+            android:textColorHint="#FF5252"
             android:hint="@string/hint_record_1breakEnd">
 
             <android.support.design.widget.TextInputEditText
@@ -142,6 +150,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:layout_weight="1"
+            android:textStyle="bold"
             android:hint="@string/hint_record_1lunchStart">
 
             <android.support.design.widget.TextInputEditText
@@ -220,6 +229,7 @@
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -234,6 +244,7 @@
                 android:paddingRight="5dp"
                 android:background="@color/colorAccent"/>
         </LinearLayout>
+        -->
 
     <!-- Lunch 2 -->
     <LinearLayout
@@ -243,6 +254,7 @@
         android:weightSum="2"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:paddingTop="20dp"
         android:orientation="horizontal"
         android:layout_below="@+id/timecard_linearlayout4">
 
@@ -378,6 +390,7 @@
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -392,6 +405,7 @@
                 android:paddingRight="5dp"
                 android:background="@color/colorAccent"/>
         </LinearLayout>
+        -->
 
     <LinearLayout
         android:id="@+id/timecard_linearlayout8"
@@ -400,6 +414,7 @@
         android:weightSum="2"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:paddingTop="20dp"
         android:orientation="horizontal"
         android:layout_below="@+id/timecard_linearlayout7">
 
@@ -535,6 +550,7 @@
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -549,6 +565,7 @@
                 android:paddingRight="5dp"
                 android:background="@color/colorAccent"/>
         </LinearLayout>
+        -->
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_record_base_pay"

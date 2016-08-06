@@ -2,6 +2,7 @@ package micahsquad.com.worklogassistant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +22,9 @@ import android.widget.EditText;
 import android.text.TextWatcher;
 import android.widget.Toast;
 
-public class CreateJobActivity extends AppCompatActivity  {
+import java.util.Date;
+
+public class CreateJobActivity extends AppCompatActivity {
 
     CoordinatorLayout coordinatorLayout;
 
@@ -27,6 +32,7 @@ public class CreateJobActivity extends AppCompatActivity  {
     private TextInputLayout inputLayoutName, inputLayoutPosition, inputLayoutPay;
     private Button submitButton;
     private Context context;
+    private long jobid;
 
     private WorkLogDB db;
 
@@ -35,33 +41,71 @@ public class CreateJobActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_job);
         //Change Action Bar Title
-        getSupportActionBar().setTitle("New Job");
-        getSupportActionBar().setHomeButtonEnabled(true);
+        final Bundle extras = getIntent().getExtras();
 
-        final ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.close_light);
+        if (extras != null){
+            jobid = extras.getLong("jobId");
+            getSupportActionBar().setTitle("Edit Job");
+            getSupportActionBar().setHomeButtonEnabled(true);
 
-        context = getApplicationContext();
+            final ActionBar actionBar = getSupportActionBar();
+            assert actionBar != null;
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.close_light);
 
-        //Set up TextInput
-        inputLayoutName = (TextInputLayout) findViewById(R.id.input_layout_job_name);
-        inputLayoutPosition = (TextInputLayout) findViewById(R.id.input_layout_job_position);
-        inputLayoutPay = (TextInputLayout) findViewById(R.id.input_layout_job_pay);
+            context = getApplicationContext();
 
-        jobName = (EditText) findViewById(R.id.input_job);
-        jobPosition = (EditText) findViewById(R.id.input_position);
-        jobPay = (EditText) findViewById(R.id.input_pay);
+            //Set up TextInput
+            inputLayoutName = (TextInputLayout) findViewById(R.id.input_layout_job_name);
+            inputLayoutPosition = (TextInputLayout) findViewById(R.id.input_layout_job_position);
+            inputLayoutPay = (TextInputLayout) findViewById(R.id.input_layout_job_pay);
 
-        submitButton = (Button) findViewById(R.id.button_submit);
+            jobName = (EditText) findViewById(R.id.input_job);
+            jobPosition = (EditText) findViewById(R.id.input_position);
+            jobPay = (EditText) findViewById(R.id.input_pay);
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                submitNewJob();
-            }
-        });
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Job j;
+                    try(WorkLogDB db = new WorkLogDB(context)) {
+                        j = db.getJob(jobid);
+                    }
+                    jobName.setText(j.getName());
+                    jobPosition.setText(j.getPosition());
+                    jobPay.setText(String.valueOf(j.getPay()));
+                }
+            }, 500);
+
+        } else {
+            getSupportActionBar().setTitle("New Job");
+            getSupportActionBar().setHomeButtonEnabled(true);
+
+            final ActionBar actionBar = getSupportActionBar();
+            assert actionBar != null;
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.close_light);
+
+            context = getApplicationContext();
+
+            //Set up TextInput
+            inputLayoutName = (TextInputLayout) findViewById(R.id.input_layout_job_name);
+            inputLayoutPosition = (TextInputLayout) findViewById(R.id.input_layout_job_position);
+            inputLayoutPay = (TextInputLayout) findViewById(R.id.input_layout_job_pay);
+
+            jobName = (EditText) findViewById(R.id.input_job);
+            jobPosition = (EditText) findViewById(R.id.input_position);
+            jobPay = (EditText) findViewById(R.id.input_pay);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.menu_record, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -72,11 +116,14 @@ public class CreateJobActivity extends AppCompatActivity  {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.record_done:
+                submitJob();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void submitNewJob(){
+    public void submitJob(){
         if (!validateJobName()){
             return;
         }
@@ -87,15 +134,23 @@ public class CreateJobActivity extends AppCompatActivity  {
             return;
         }
 
-        long job_id;
-        try ( WorkLogDB db = new WorkLogDB(context)){
-            job_id = db.createJob(jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
-        }
-
-        //Pass the job name to the main activity
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        i.putExtra("jobName", jobName.getText().toString());
-        i.putExtra("jobId", job_id);
+        final Bundle extras = getIntent().getExtras();
+        if (extras.containsKey("jobId")){
+            try ( WorkLogDB db = new WorkLogDB(context)) {
+                db.updateJob(jobid,jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
+            }
+
+        } else {
+            long job_id;
+            try ( WorkLogDB db = new WorkLogDB(context)){
+                job_id = db.createJob(jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
+            }
+
+            //Pass the job name to the main activity
+            i.putExtra("jobName", jobName.getText().toString());
+            i.putExtra("jobId", job_id);
+        }
         startActivity(i);
         finish();
     }

@@ -60,10 +60,7 @@ public class JobsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         context = getActivity();
-        WorkLogDB db = new WorkLogDB(context);
-        c = db.getAllJobs();
 
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
 
@@ -92,7 +89,10 @@ public class JobsFragment extends Fragment {
             }
         }));*/
 
-        prepareJobs();
+        try (WorkLogDB db = new WorkLogDB(context)) {
+            c = db.getAllJobs();
+            prepareJobs();
+        }
     }
 
 
@@ -100,7 +100,6 @@ public class JobsFragment extends Fragment {
     private void prepareJobs() {
         int numOfJobs = c.getCount();
         c.moveToFirst();
-
 
         for (int i=0; i<numOfJobs; i++){
             Job a = new Job();
@@ -113,6 +112,7 @@ public class JobsFragment extends Fragment {
             c.moveToNext();
         }
 
+        c.close();
         adapter.notifyDataSetChanged();
     }
 

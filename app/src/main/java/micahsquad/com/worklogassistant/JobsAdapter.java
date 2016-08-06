@@ -7,18 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v7.app.AppCompatActivity;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -27,13 +23,11 @@ import java.text.DecimalFormat;
 
 import java.util.List;
 
-import static android.support.v4.app.ActivityCompat.startActivity;
-
 /**
  * Created by Micah on 7/20/2016.
  */
 public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> {
-    private Context mContext;
+    private Context context;
     private List<Job> jobList;
     String letter;
 
@@ -55,8 +49,8 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
         }
     }
 
-    public JobsAdapter(Context mContext, List<Job> jobList) {
-        this.mContext = mContext;
+    public JobsAdapter(Context context, List<Job> jobList) {
+        this.context = context;
         this.jobList = jobList;
     }
 
@@ -102,9 +96,9 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e(view.getClass().getName(), "Testing");
-                Toast.makeText(mContext, job.getJobId() + " is selected!", Toast.LENGTH_SHORT).show();
-                view.getContext().startActivity(new Intent(view.getContext(), CreateRecordActivity.class));
+                Intent i = new Intent(view.getContext(), CreateRecordActivity.class);
+                i.putExtra("jobId", job.getJobId());
+                view.getContext().startActivity(i);
             }
         });
     }
@@ -112,7 +106,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
     // Showing popup menu when tapping on 3 dots
     private void showPopupMenu(View view, Job job) {
         // inflate menu
-        PopupMenu popup = new PopupMenu(mContext, view);
+        PopupMenu popup = new PopupMenu(context, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_job, popup.getMenu());
         popup.setOnMenuItemClickListener(new MyMenuItemClickListener(job));
@@ -129,15 +123,19 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
 
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
+            WorkLogDB db = new WorkLogDB(context);
             switch (menuItem.getItemId()) {
                 case R.id.action_job_edit:
-                    Toast.makeText(mContext, "Edit Job", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(context, CreateJobActivity.class);
+                    i.putExtra("jobId", job.getJobId());
+                    context.startActivity(i);
+                    Toast.makeText(context, "Edit Job", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.action_job_delete:
-                    WorkLogDB db = new WorkLogDB(mContext);
+                    db = new WorkLogDB(context);
                     db.deleteJob(job.getJobId());
                     removeItem(job);
-                    Toast.makeText(mContext, "Delete Job", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Delete Job", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
             }

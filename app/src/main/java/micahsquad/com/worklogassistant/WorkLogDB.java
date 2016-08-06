@@ -51,11 +51,37 @@ public class WorkLogDB implements AutoCloseable {
         db.execSQL(selectQuery);*/
     }
 
+    public Job getJob(long job_id){
+        String jobid = String.valueOf(job_id);
+        Log.i("LOG", "Retrieved job by jobid = " + jobid);
+        String selectQuery = "SELECT jobname, jobposition, jobpay FROM jobs WHERE jobid = ?";
+
+        Cursor c = db.rawQuery(selectQuery, new String[] {jobid});
+        c.moveToFirst();
+        Job j = new Job();
+        j.setName(c.getString(c.getColumnIndex("jobname")));
+        j.setPosition(c.getString(c.getColumnIndex("jobposition")));
+        j.setPay(c.getDouble(c.getColumnIndex("jobpay")));
+        return j;
+    }
+
+    public void updateJob(long job_id, String job_name, String job_position, Double job_pay){
+        ContentValues values = new ContentValues();
+        values.put("jobname", job_name);
+        values.put("jobposition", job_position);
+        values.put("jobpay", job_pay);
+        Log.i("LOG", "Updated job with jobid value of " + String.valueOf(job_id));
+        db.update("jobs", values, "jobid=" + job_id, null);
+    }
+
     public Cursor getAllJobs(){
         Log.i("LOG", "Retrieved job table");
         String selectQuery = "SELECT * FROM jobs ORDER BY jobname ASC;";
-
         return db.rawQuery(selectQuery, null);
+    }
+
+    public long createNewRecord(long job_id){
+        return job_id;
     }
 
 }

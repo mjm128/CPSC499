@@ -60,17 +60,6 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/button_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"
-        />
-
-
 </RelativeLayout>
 
 
