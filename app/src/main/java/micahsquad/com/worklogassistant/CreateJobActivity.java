@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.text.TextWatcher;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 public class CreateJobActivity extends AppCompatActivity {
@@ -74,7 +75,9 @@ public class CreateJobActivity extends AppCompatActivity {
                     }
                     jobName.setText(j.getName());
                     jobPosition.setText(j.getPosition());
-                    jobPay.setText(String.valueOf(j.getPay()));
+                    DecimalFormat formater = new DecimalFormat("0.00#");
+                    String pay = formater.format(j.getPay());
+                    jobPay.setText(pay);
                 }
             }, 500);
 
@@ -136,7 +139,7 @@ public class CreateJobActivity extends AppCompatActivity {
 
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         final Bundle extras = getIntent().getExtras();
-        if (extras.containsKey("jobId")){
+        if (extras != null){
             try ( WorkLogDB db = new WorkLogDB(context)) {
                 db.updateJob(jobid,jobName.getText().toString(), jobPosition.getText().toString(), Double.parseDouble(jobPay.getText().toString()));
             }
