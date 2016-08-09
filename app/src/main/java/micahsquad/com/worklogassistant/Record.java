@@ -23,16 +23,17 @@ public class Record {
         this.timecard = timecard;
     }
 
-    public class TimeCard {
-        private int shiftid;
-        private int jobid;
+    public static class TimeCard {
+        private long shiftid;
+        private long jobid;
         private String date, startTime, endTime, breakStart1, breakEnd1, lunchStart1, lunchEnd1,
                 breakStart2, breakEnd2, lunchStart2, lunchEnd2, breakStart3, breakEnd3,
                 lunchStart3, lunchEnd3, breakStart4, breakEnd4, lunchStart4, lunchEnd4,
-                breakStart5, breakEnd5,
-                basePay, comment;
+                breakStart5, breakEnd5, comment;
 
-        public int getShiftid() {
+        private Double basePay;
+
+        public long getShiftid() {
             return shiftid;
         }
 
@@ -40,7 +41,7 @@ public class Record {
             this.shiftid = shiftid;
         }
 
-        public int getJobid() {
+        public long getJobid() {
             return jobid;
         }
 
@@ -216,11 +217,11 @@ public class Record {
             this.breakEnd5 = breakEnd5;
         }
 
-        public String getBasePay() {
+        public Double getBasePay() {
             return basePay;
         }
 
-        public void setBasePay(String basePay) {
+        public void setBasePay(Double basePay) {
             this.basePay = basePay;
         }
 
@@ -233,8 +234,108 @@ public class Record {
         }
     }
 
-    private class Tip {
+    public static class Tip {
+        private long shiftId, jobId, tipId;
+        private double tip, ccTip, tippedOut, percentTip, sales, tax, revenue;
+        private String comment;
 
+        public Boolean getHasTip() {
+            return hasTip;
+        }
+
+        public void setHasTip(Boolean hasTip) {
+            this.hasTip = hasTip;
+        }
+
+        private Boolean hasTip = false;
+
+        public long getShiftId() {
+            return shiftId;
+        }
+
+        public void setShiftId(long shiftId) {
+            this.shiftId = shiftId;
+        }
+
+        public long getJobId() {
+            return jobId;
+        }
+
+        public void setJobId(long jobId) {
+            this.jobId = jobId;
+        }
+
+        public long getTipId() {
+            return tipId;
+        }
+
+        public void setTipId(long tipId) {
+            this.tipId = tipId;
+        }
+
+        public double getTip() {
+            return tip;
+        }
+
+        public void setTip(Double tip) {
+            this.tip = tip;
+        }
+
+        public double getCcTip() {
+            return ccTip;
+        }
+
+        public void setCcTip(Double ccTip) {
+            this.ccTip = ccTip;
+        }
+
+        public double getTippedOut() {
+            return tippedOut;
+        }
+
+        public void setTippedOut(Double tippedOut) {
+            this.tippedOut = tippedOut;
+        }
+
+        public double getPercentTip() {
+            return percentTip;
+        }
+
+        public void setPercentTip(Double percentTip) {
+            this.percentTip = percentTip;
+        }
+
+        public double getSales() {
+            return sales;
+        }
+
+        public void setSales(Double sales) {
+            this.sales = sales;
+        }
+
+        public double getTax() {
+            return tax;
+        }
+
+        public void setTax(Double tax) {
+            this.tax = tax;
+        }
+
+        public double getRevenue() {
+            return revenue;
+        }
+
+        public void setRevenue(Double revenue) {
+            this.revenue = revenue;
+        }
+
+        public String getComment() {
+            return comment;
+        }
+
+        public void setComment(String comment) {
+            this.comment = comment;
+        }
     }
 
 }

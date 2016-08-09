@@ -6,13 +6,20 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static micahsquad.com.worklogassistant.Record.*;
 
 /**
  * Created by Micah on 7/25/2016.
@@ -31,7 +38,6 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
     SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     SimpleDateFormat displayTimeFormat = new SimpleDateFormat("M/d/yyyy h:mm a");
     SimpleDateFormat displayDateFormat = new SimpleDateFormat("E, MMMM d, yyyy");
-
 
     public TimeCardFragment() {
         // Required empty public constructor
@@ -247,6 +253,9 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                final Bundle extras = getActivity().getIntent().getExtras();
+                DecimalFormat formater = new DecimalFormat("0.00#");
+                basePay.setText(formater.format(extras.getDouble("pay")));
                 Date d = new Date();
                 if (date.getText().toString().length() == 0) {
                     date.setText(displayDateFormat.format(d));
@@ -334,6 +343,125 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
         lunchEnd4.setOnLongClickListener(this);
         basePay.setOnLongClickListener(this);
         comment.setOnLongClickListener(this);
+
+        date.addTextChangedListener(new TimeTextWatcher(date));
+        startTime.addTextChangedListener(new TimeTextWatcher(startTime));
+    }
+
+    public Record.TimeCard getData(){
+        Record.TimeCard timeCard = new Record.TimeCard();
+        Double pay;
+        if (basePay.getText().toString() == ""){
+            pay = -1.0;
+        } else {
+            pay = Double.valueOf(basePay.getText().toString());
+        }
+
+        timeCard.setBasePay(pay);
+        timeCard.setComment(comment.getText().toString());
+
+        timeCard.setDate(Date2TimeStamp(date.getText().toString()));
+        timeCard.setStartTime(Time2TimeStamp(startTime.getText().toString()));
+        timeCard.setEndTime(Time2TimeStamp(endTime.getText().toString()));
+
+        timeCard.setBreakStart1(Time2TimeStamp(breakStart1.getText().toString()));
+        timeCard.setBreakStart2(Time2TimeStamp(breakStart2.getText().toString()));
+        timeCard.setBreakStart3(Time2TimeStamp(breakStart3.getText().toString()));
+        timeCard.setBreakStart4(Time2TimeStamp(breakStart4.getText().toString()));
+        timeCard.setBreakStart5(Time2TimeStamp(breakStart5.getText().toString()));
+
+        timeCard.setBreakEnd1(Time2TimeStamp(breakEnd1.getText().toString()));
+        timeCard.setBreakEnd2(Time2TimeStamp(breakEnd2.getText().toString()));
+        timeCard.setBreakEnd3(Time2TimeStamp(breakEnd3.getText().toString()));
+        timeCard.setBreakEnd4(Time2TimeStamp(breakEnd4.getText().toString()));
+        timeCard.setBreakEnd5(Time2TimeStamp(breakEnd5.getText().toString()));
+
+        timeCard.setLunchStart1(Time2TimeStamp(lunchStart1.getText().toString()));
+        timeCard.setLunchStart2(Time2TimeStamp(lunchStart2.getText().toString()));
+        timeCard.setLunchStart3(Time2TimeStamp(lunchStart3.getText().toString()));
+        timeCard.setLunchStart4(Time2TimeStamp(lunchStart4.getText().toString()));
+        timeCard.setLunchEnd1(Time2TimeStamp(lunchEnd1.getText().toString()));
+        timeCard.setLunchEnd2(Time2TimeStamp(lunchEnd2.getText().toString()));
+        timeCard.setLunchEnd3(Time2TimeStamp(lunchEnd3.getText().toString()));
+        timeCard.setLunchEnd4(Time2TimeStamp(lunchEnd4.getText().toString()));
+
+        return timeCard;
+    }
+
+    private String Time2TimeStamp(String s){
+        try {
+            s = timeStampFormat.format(displayTimeFormat.parse(s));
+        } catch (ParseException e) {
+            s = "";
+        }
+        return s;
+    }
+
+    private String Date2TimeStamp(String s){
+        try {
+            s = timeStampFormat.format(displayDateFormat.parse(s));
+        } catch (ParseException e) {
+            s = "";
+        }
+        return s;
+    }
+
+    public boolean dateCheck(){
+        String t1 = null, t2 = null;
+        try {
+            t1 = timeStampFormat.format(displayDateFormat.parse(date.getText().toString()));
+        } catch (ParseException e) {
+            date.setError("Must have a date");
+            Toast.makeText(getActivity(), "Record must have a date", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        date.setError(null);
+        try {
+            t2 = timeStampFormat.format(displayTimeFormat.parse(startTime.getText().toString()));
+        } catch (ParseException e) {
+            startTime.setError(null);
+            return true;
+        }
+        if (t1.substring(0, 10).equals(t2.substring(0, 10))) {
+                date.setError(null);
+                startTime.setError(null);
+                return true;
+        }
+        startTime.setError("Date must be same day as Start Time");
+        Toast.makeText(getActivity(), "Start Time & Record Date must have the same day", Toast.LENGTH_LONG).show();
+        return false;
+    }
+
+    private class TimeTextWatcher implements TextWatcher {
+        private View view;
+
+        private TimeTextWatcher(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.input_record_date:
+                    date.setError(null);
+                    startTime.setError(null);
+                    break;
+                case R.id.input_record_startTime:
+                    startTime.setError(null);
+                    break;
+            }
+
+        }
     }
 }
 

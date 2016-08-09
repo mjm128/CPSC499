@@ -65,7 +65,7 @@ public class WorkLogDB implements AutoCloseable {
         return j;
     }
 
-    public void updateJob(long job_id, String job_name, String job_position, Double job_pay){
+    public void updateJob(long job_id, String job_name, String job_position, double job_pay){
         ContentValues values = new ContentValues();
         values.put("jobname", job_name);
         values.put("jobposition", job_position);

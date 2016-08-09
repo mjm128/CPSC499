@@ -27,6 +27,7 @@ public class CreateRecordActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private long jobid;
+    private double basePay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,15 +110,29 @@ public class CreateRecordActivity extends AppCompatActivity {
                 this.finish();
                 return true;
             case R.id.record_done:
-                createNewRecord();
-                this.finish();
+                if (validDate()) {
+                    createNewRecord();
+                    this.finish();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean validDate(){
+        FragmentPagerAdapter fpa = (FragmentPagerAdapter) viewPager.getAdapter();
+        TimeCardFragment f = (TimeCardFragment) fpa.getItem(0);
+        return f.dateCheck();
+    }
+
     private void createNewRecord(){
-        TimeCardFragment timeCardFragment;
+        Record r = new Record();
+
+        FragmentPagerAdapter fpa = (FragmentPagerAdapter) viewPager.getAdapter();
+        TimeCardFragment f1 = (TimeCardFragment) fpa.getItem(0);
+        TipFragment f2 = (TipFragment) fpa.getItem(1);
+        r.setTimecard(f1.getData());
+        r.setTip(f2.getData());
 
 
     }

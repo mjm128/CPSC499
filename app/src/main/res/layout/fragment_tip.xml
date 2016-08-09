@@ -30,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:layout_weight="1"
-                android:textColorHint="#FF4DCFE5"
                 android:hint="@string/hint_record_total_tip">
 
                 <android.support.design.widget.TextInputEditText
@@ -67,11 +66,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColorHint="#FF4DCFE5"
                 android:paddingTop="5dp">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/input_credit_card"
+                    android:id="@+id/input_record_credit_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
@@ -87,7 +85,6 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:layout_weight="1"
-                android:textColorHint="#FF4DCFE5"
                 android:hint="@string/hint_record_tipped_out">
 
                 <android.support.design.widget.TextInputEditText
@@ -113,7 +110,6 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:layout_weight="1"
-                android:textColorHint="#FF4DCFE5"
                 android:hint="@string/hint_record_net_sales">
 
                 <android.support.design.widget.TextInputEditText
@@ -131,7 +127,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingTop="5dp"
-                android:textColorHint="#FF4DCFE5"
                 android:hint="@string/hint_record_tax_collected">
 
                 <android.support.design.widget.TextInputEditText
@@ -149,7 +144,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tip_linearlayout3"
             android:paddingTop="5dp"
-            android:textColorHint="#FF4DCFE5"
             android:hint="@string/hint_record_total_revenue">
 
             <android.support.design.widget.TextInputEditText
@@ -166,7 +160,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/input_layout_record_total_revenue"
             android:paddingTop="5dp"
-            android:textColorHint="#FF4DCFE5"
             android:hint="@string/hint_record_tip_comment">
 
             <android.support.design.widget.TextInputEditText

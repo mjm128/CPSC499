@@ -31,7 +31,6 @@ public class CreateJobActivity extends AppCompatActivity {
 
     private EditText jobName, jobPosition, jobPay;
     private TextInputLayout inputLayoutName, inputLayoutPosition, inputLayoutPay;
-    private Button submitButton;
     private Context context;
     private long jobid;
 
@@ -76,8 +75,7 @@ public class CreateJobActivity extends AppCompatActivity {
                     jobName.setText(j.getName());
                     jobPosition.setText(j.getPosition());
                     DecimalFormat formater = new DecimalFormat("0.00#");
-                    String pay = formater.format(j.getPay());
-                    jobPay.setText(pay);
+                    jobPay.setText(formater.format(j.getPay()));
                 }
             }, 500);
 

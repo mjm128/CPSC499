@@ -7,13 +7,13 @@ public class Job {
     private long jobid;
     private String name;
     private String position;
-    private Double pay;
+    private double pay;
 
     public Job(){
 
     }
 
-    public Job(long jobid, String name, String position, Double pay){
+    public Job(long jobid, String name, String position, double pay){
         this.jobid = jobid;
         this.name = name;
         this.position = position;
@@ -40,11 +40,11 @@ public class Job {
         this.position = position;
     }
 
-    public Double getPay(){
+    public double getPay(){
         return pay;
     }
 
-    public void setPay(Double pay){
+    public void setPay(double pay){
         this.pay = pay;
     }
 
