@@ -31,7 +31,31 @@ public class Record {
                 lunchStart3, lunchEnd3, breakStart4, breakEnd4, lunchStart4, lunchEnd4,
                 breakStart5, breakEnd5, comment;
 
-        private Double basePay;
+        private double basePay, timeWorked, shiftPay, totalPay;
+
+        public double getShiftPay() {
+            return shiftPay;
+        }
+
+        public void setShiftPay(double shiftPay) {
+            this.shiftPay = shiftPay;
+        }
+
+        public double getTotalPay() {
+            return totalPay;
+        }
+
+        public void setTotalPay(double totalPay) {
+            this.totalPay = totalPay;
+        }
+
+        public double getTimeWorked() {
+            return timeWorked;
+        }
+
+        public void setTimeWorked(double timeWorked) {
+            this.timeWorked = timeWorked;
+        }
 
         public long getShiftid() {
             return shiftid;
@@ -41,11 +65,11 @@ public class Record {
             this.shiftid = shiftid;
         }
 
-        public long getJobid() {
+        public long getJobId() {
             return jobid;
         }
 
-        public void setJobid(int jobid) {
+        public void setJobId(long jobid) {
             this.jobid = jobid;
         }
 
@@ -217,11 +241,11 @@ public class Record {
             this.breakEnd5 = breakEnd5;
         }
 
-        public Double getBasePay() {
+        public double getBasePay() {
             return basePay;
         }
 
-        public void setBasePay(Double basePay) {
+        public void setBasePay(double basePay) {
             this.basePay = basePay;
         }
 
@@ -238,16 +262,6 @@ public class Record {
         private long shiftId, jobId, tipId;
         private double tip, ccTip, tippedOut, percentTip, sales, tax, revenue;
         private String comment;
-
-        public Boolean getHasTip() {
-            return hasTip;
-        }
-
-        public void setHasTip(Boolean hasTip) {
-            this.hasTip = hasTip;
-        }
-
-        private Boolean hasTip = false;
 
         public long getShiftId() {
             return shiftId;

@@ -352,7 +352,7 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
         Record.TimeCard timeCard = new Record.TimeCard();
         Double pay;
         if (basePay.getText().toString() == ""){
-            pay = -1.0;
+            pay = -999.9;
         } else {
             pay = Double.valueOf(basePay.getText().toString());
         }

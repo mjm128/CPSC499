@@ -2,6 +2,7 @@
 
 + Add in a confirmation dialog to delete job (8/5/2016)
 
+- Creating new Job is crashing app (8/7/2016) FIXED: (8/8/2016)
 - Change create job layout so that it has the done button on toolbar (7/19/2016) FIXED: (8/5/2016)
 - Fix job cardview going to create new record even if pressed on the 3 dot menu (7/25/2016) FIXED: (8/5/2016)
 - Add in delete / edit functions to the job cardviews (7/25/2016) FIXED: (8/5/2016)

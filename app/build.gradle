@@ -35,4 +35,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:+'
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    compile 'joda-time:joda-time:+'
 }

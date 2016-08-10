@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,6 @@ public class CreateRecordActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private long jobid;
-    private double basePay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,15 +126,61 @@ public class CreateRecordActivity extends AppCompatActivity {
     }
 
     private void createNewRecord(){
-        Record r = new Record();
+        Record.TimeCard tc;
+        Record.Tip tip;
+
+        TimeCalculation tcalc = new TimeCalculation();
 
         FragmentPagerAdapter fpa = (FragmentPagerAdapter) viewPager.getAdapter();
         TimeCardFragment f1 = (TimeCardFragment) fpa.getItem(0);
         TipFragment f2 = (TipFragment) fpa.getItem(1);
-        r.setTimecard(f1.getData());
-        r.setTip(f2.getData());
 
+        tc = f1.getData();
+        tip = f2.getData();
 
+        tc.setJobId(jobid);
+        double time;
+        tc.setTimeWorked(tcalc.calculateHours(tc.getStartTime(), tc.getEndTime()));
+        if (tc.getTimeWorked() >= 0.0){
+            time = tcalc.calculateHours(tc.getLunchStart1(), tc.getLunchEnd1());
+            if (time >= 0.0){ tc.setTimeWorked(tc.getTimeWorked()-time); }
+
+            time = tcalc.calculateHours(tc.getLunchStart2(), tc.getLunchEnd2());
+            if (time >= 0.0){ tc.setTimeWorked(tc.getTimeWorked()-time); }
+
+            time = tcalc.calculateHours(tc.getLunchStart3(), tc.getLunchEnd3());
+            if (time >= 0.0){ tc.setTimeWorked(tc.getTimeWorked()-time); }
+
+            time = tcalc.calculateHours(tc.getLunchStart4(), tc.getLunchEnd4());
+            if (time >= 0.0){ tc.setTimeWorked(tc.getTimeWorked()-time); }
+
+            DecimalFormat formater = new DecimalFormat("0.##");
+            tc.setShiftPay(Double.valueOf(formater.format(tc.getBasePay() * tc.getTimeWorked())));
+
+            if (tip != null){
+                if (tip.getTip() >= 0.0){
+                    tc.setTotalPay(tc.getShiftPay()+tip.getTip());
+                }
+            } else {
+                tc.setTotalPay(tc.getShiftPay());
+            }
+        } else {
+            tc.setTimeWorked(-999.9);
+            tc.setShiftPay(-999.9);
+            tc.setTotalPay(-999.9);
+            tc.setTotalPay(-999.9);
+        }
+
+        long shiftid;
+        try ( WorkLogDB db = new WorkLogDB(getApplicationContext())){
+            shiftid = db.createNewTimeCard(tc);
+        }
+        if (tip != null){
+            tip.setShiftId(shiftid);
+            try ( WorkLogDB db = new WorkLogDB(getApplicationContext())){
+                db.createNewTip(tip);
+            }
+        }
     }
 
 }

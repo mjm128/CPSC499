@@ -68,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE tips (" +
             "tipid INTEGER PRIMARY KEY AUTOINCREMENT," +
             "shiftid INTEGER," +
+            "jobid INTEGER," +
             "netsales REAL," +
             "cctips REAL," +
             "tax REAL," +
@@ -75,7 +76,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "totaltip REAL," +
             "tippercent REAL," +
             "tip_comment TEXT," +
-            "FOREIGN KEY(shiftid) REFERENCES timecards(shiftid) ON DELETE CASCADE);";
+            "FOREIGN KEY(shiftid) REFERENCES timecards(shiftid) ON DELETE CASCADE," +
+            "FOREIGN KEY(jobid) REFERENCES timecards(jobid) ON DELETE CASCADE);";
 
 
     public DatabaseHelper(Context context) {

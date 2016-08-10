@@ -123,10 +123,11 @@ public class TipFragment extends Fragment {
         t.setTax(parseDouble(tax.getText().toString()));
         t.setRevenue(parseDouble(revenue.getText().toString()));
         t.setComment(comment.getText().toString());
+        t.setTippedOut(parseDouble(tippercent.getText().toString()));
         if (!tippercent.getText().toString().equals("0.00%")){
-            t.setPercentTip(t.getTip() / t.getRevenue());
+            t.setPercentTip((t.getTip() / t.getSales()) * 100);
             hasTipRecord = true;
-        }
+        } else { t.setPercentTip(-999.9); }
         if (t.getTip() > -1.0 || t.getCcTip() > -1.0 || t.getSales() > -1.0 ||
                 t.getTax() > -1.0 || t.getRevenue() > -1.0 || !t.getComment().equals("")){
             hasTipRecord = true;

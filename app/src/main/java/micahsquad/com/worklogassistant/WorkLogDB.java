@@ -80,8 +80,56 @@ public class WorkLogDB implements AutoCloseable {
         return db.rawQuery(selectQuery, null);
     }
 
-    public long createNewRecord(long job_id){
-        return job_id;
+    public long createNewTimeCard(Record.TimeCard t){
+        ContentValues values = new ContentValues();
+        values.put("jobid", t.getJobId());
+        values.put("shiftdate", t.getDate());
+        values.put("starttime", t.getStartTime());
+        values.put("endtime", t.getEndTime());
+        values.put("first_breakstart", t.getBreakStart1());
+        values.put("second_breakstart", t.getBreakStart2());
+        values.put("third_breakstart", t.getBreakStart3());
+        values.put("fourth_breakstart", t.getBreakStart4());
+        values.put("fifth_breakstart", t.getBreakStart5());
+        values.put("first_breakend", t.getBreakEnd1());
+        values.put("second_breakend", t.getBreakEnd2());
+        values.put("third_breakend", t.getBreakEnd3());
+        values.put("fourth_breakend", t.getBreakEnd4());
+        values.put("fifth_breakend", t.getBreakEnd5());
+        values.put("first_lunchstart", t.getLunchStart1());
+        values.put("second_lunchstart", t.getLunchStart2());
+        values.put("third_lunchstart", t.getLunchStart3());
+        values.put("fourth_lunchstart", t.getLunchStart4());
+        values.put("first_lunchend", t.getLunchEnd1());
+        values.put("second_lunchend", t.getLunchEnd2());
+        values.put("third_lunchend", t.getLunchEnd3());
+        values.put("fourth_lunchend", t.getLunchEnd4());
+        values.put("payrate", t.getBasePay());
+        values.put("timeworked", t.getTimeWorked());
+        values.put("shiftpay", t.getShiftPay());
+        values.put("totalpay", t.getTotalPay());
+        values.put("comment", t.getComment());
+
+        Log.i("LOG", "Created a new TimeCard Record for jobid= " + String.valueOf(t.getJobId()));
+        long shiftid;
+        shiftid = db.insert("timecards", null, values);
+        return shiftid;
+    }
+
+    public void createNewTip(Record.Tip t){
+        ContentValues values = new ContentValues();
+        values.put("shiftid", t.getShiftId());
+        values.put("jobid", t.getJobId());
+        values.put("netsales", t.getSales());
+        values.put("cctips", t.getCcTip());
+        values.put("tax", t.getTax());
+        values.put("totalrevenue", t.getRevenue());
+        values.put("totaltip", t.getTip());
+        values.put("tippercent", t.getPercentTip());
+        values.put("tip_comment", t.getComment());
+
+        Log.i("LOG", "Created a new Tip Record for jobid= " + String.valueOf(t.getJobId()));
+        db.insert("tips", null, values);
     }
 
 }

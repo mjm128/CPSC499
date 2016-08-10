@@ -1,5 +1,10 @@
 ============================== APK Change Log ==============================
 
+----- Version 0.11 (8/5/2016) -----
+    - Fixed issue where creating new Job crashed the app. YIKES!
+    - Creating Job is fully working now
+    - Need to add in ability to display recent jobs now to test
+
 ----- Version 0.10 (8/5/2016) -----
     - Implemented the ability to edit a job
     - Fully added in all layout for New Record
