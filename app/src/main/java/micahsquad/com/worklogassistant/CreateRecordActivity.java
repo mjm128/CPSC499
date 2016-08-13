@@ -128,7 +128,7 @@ public class CreateRecordActivity extends AppCompatActivity {
     private void createNewRecord(){
         Record.TimeCard tc;
         Record.Tip tip;
-
+        DecimalFormat formater = new DecimalFormat("0.00");
         TimeCalculation tcalc = new TimeCalculation();
 
         FragmentPagerAdapter fpa = (FragmentPagerAdapter) viewPager.getAdapter();
@@ -154,7 +154,7 @@ public class CreateRecordActivity extends AppCompatActivity {
             time = tcalc.calculateHours(tc.getLunchStart4(), tc.getLunchEnd4());
             if (time >= 0.0){ tc.setTimeWorked(tc.getTimeWorked()-time); }
 
-            DecimalFormat formater = new DecimalFormat("0.##");
+
             tc.setShiftPay(Double.valueOf(formater.format(tc.getBasePay() * tc.getTimeWorked())));
 
             if (tip != null){
@@ -170,7 +170,7 @@ public class CreateRecordActivity extends AppCompatActivity {
             tc.setTotalPay(-999.9);
             tc.setTotalPay(-999.9);
         }
-
+        tc.setTimeWorked(Double.valueOf(formater.format(tc.getTimeWorked())));
         long shiftid;
         try ( WorkLogDB db = new WorkLogDB(getApplicationContext())){
             shiftid = db.createNewTimeCard(tc);

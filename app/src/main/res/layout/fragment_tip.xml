@@ -48,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_gravity="center|center_horizontal|center_vertical"
-                android:gravity="center"
-                android:paddingTop="5dp"/>
+                android:gravity="center|center_vertical"
+                android:paddingTop="18dp"/>
         </LinearLayout>
 
 

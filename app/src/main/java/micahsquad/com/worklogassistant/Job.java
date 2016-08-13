@@ -8,16 +8,19 @@ public class Job {
     private String name;
     private String position;
     private double pay;
+    private String rounding;
+
 
     public Job(){
 
     }
 
-    public Job(long jobid, String name, String position, double pay){
+    public Job(long jobid, String name, String position, double pay, String rounding){
         this.jobid = jobid;
         this.name = name;
         this.position = position;
         this.pay = pay;
+        this.rounding = rounding;
     }
 
     public long getJobId() { return jobid; }
@@ -47,5 +50,9 @@ public class Job {
     public void setPay(double pay){
         this.pay = pay;
     }
+
+    public String getRounding() { return rounding; }
+
+    public void setRounding(String rounding) { this.rounding = rounding; }
 
 }

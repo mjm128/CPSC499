@@ -27,11 +27,12 @@ public class WorkLogDB implements AutoCloseable {
         }
     }
 
-    public long createJob(String job_name, String job_position, Double job_pay){
+    public long createJob(String job_name, String job_position, Double job_pay, String rounding){
         ContentValues values = new ContentValues();
         values.put("jobname", job_name);
         values.put("jobposition", job_position);
         values.put("jobpay", job_pay);
+        values.put("timerounding", rounding);
         long job_id = db.insert("jobs", null, values);
 
         Log.e("LOG", "New job created with jobid value of " + String.valueOf(job_id));
@@ -41,20 +42,12 @@ public class WorkLogDB implements AutoCloseable {
     public void deleteJob(long job_id){
         Log.i("LOG", "Deleted job with jobid value of " + String.valueOf(job_id));
         db.delete("jobs", "jobid" + " = ?", new String[] { String.valueOf(job_id)});
-
-        //Used for resetting the auto increment counter
-        /*Cursor cursor = db.rawQuery("SELECT max(jobid) FROM jobs", null);
-        cursor.moveToFirst();
-        long value = cursor.getInt(0);
-        String selectQuery = "UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(value) + " WHERE name = 'jobs';";
-        Log.i("LOG", "Set jobid incrementer value to " + String.valueOf(value));
-        db.execSQL(selectQuery);*/
     }
 
     public Job getJob(long job_id){
         String jobid = String.valueOf(job_id);
         Log.i("LOG", "Retrieved job by jobid = " + jobid);
-        String selectQuery = "SELECT jobname, jobposition, jobpay FROM jobs WHERE jobid = ?";
+        String selectQuery = "SELECT jobname, jobposition, jobpay, timerounding FROM jobs WHERE jobid = ?";
 
         Cursor c = db.rawQuery(selectQuery, new String[] {jobid});
         c.moveToFirst();
@@ -62,14 +55,16 @@ public class WorkLogDB implements AutoCloseable {
         j.setName(c.getString(c.getColumnIndex("jobname")));
         j.setPosition(c.getString(c.getColumnIndex("jobposition")));
         j.setPay(c.getDouble(c.getColumnIndex("jobpay")));
+        j.setRounding(c.getString(c.getColumnIndex("timerounding")));
         return j;
     }
 
-    public void updateJob(long job_id, String job_name, String job_position, double job_pay){
+    public void updateJob(long job_id, String job_name, String job_position, double job_pay, String rounding){
         ContentValues values = new ContentValues();
         values.put("jobname", job_name);
         values.put("jobposition", job_position);
         values.put("jobpay", job_pay);
+        values.put("timerounding", rounding);
         Log.i("LOG", "Updated job with jobid value of " + String.valueOf(job_id));
         db.update("jobs", values, "jobid=" + job_id, null);
     }
@@ -130,6 +125,60 @@ public class WorkLogDB implements AutoCloseable {
 
         Log.i("LOG", "Created a new Tip Record for jobid= " + String.valueOf(t.getJobId()));
         db.insert("tips", null, values);
+    }
+
+    public Cursor getRecentRecords(){
+        Log.i("LOG", "Retrieved recent records");
+        String selectQuery = "SELECT " +
+                                    "jobs.jobid AS jobid," +
+                                    "jobs.jobname AS jobname," +
+                                    "jobs.jobposition AS jobposition," +
+                                    "timecards.shiftid AS shiftid," +
+                                    "timecards.shiftdate AS shiftdate," +
+                                    "timecards.starttime AS starttime," +
+                                    "timecards.endtime AS endtime," +
+                                    "timecards.first_breakstart AS first_breakstart," +
+                                    "timecards.second_breakstart AS second_breakstart," +
+                                    "timecards.third_breakstart AS third_breakstart," +
+                                    "timecards.fourth_breakstart AS fourth_breakstart," +
+                                    "timecards.fifth_breakstart AS fifth_breakstart," +
+                                    "timecards.first_breakend AS first_breakend," +
+                                    "timecards.second_breakend AS second_breakend," +
+                                    "timecards.third_breakend AS third_breakend," +
+                                    "timecards.fourth_breakend AS fourth_breakend," +
+                                    "timecards.fifth_breakend AS fifth_breakend," +
+                                    "timecards.first_lunchstart AS first_lunchstart," +
+                                    "timecards.second_lunchstart AS second_lunchstart," +
+                                    "timecards.third_lunchstart AS third_lunchstart," +
+                                    "timecards.fourth_lunchstart AS fourth_lunchstart," +
+                                    "timecards.first_lunchend AS first_lunchend," +
+                                    "timecards.second_lunchend AS second_lunchend," +
+                                    "timecards.third_lunchend AS third_lunchend," +
+                                    "timecards.fourth_lunchend AS fourth_lunchend," +
+                                    "timecards.payrate AS payrate," +
+                                    "timecards.timeworked AS timeworked," +
+                                    "timecards.shiftpay AS shiftpay," +
+                                    "timecards.totalpay AS totalpay," +
+                                    "timecards.comment AS timecard_comment," +
+                                    "tips.netsales AS sales," +
+                                    "tips.cctips AS cctips," +
+                                    "tips.tax AS tax," +
+                                    "tips.totalrevenue AS revenue," +
+                                    "tips.totaltip AS tip," +
+                                    "tips.tippercent AS percent," +
+                                    "tips.tip_comment AS tip_comment " +
+                                "FROM " +
+                                    "jobs " +
+                                    "JOIN timecards ON timecards.jobid = jobs.jobid " +
+                                    "LEFT JOIN tips ON tips.shiftid = timecards.shiftid " +
+                                "ORDER BY shiftid DESC;";
+        return db.rawQuery(selectQuery, null);
+    }
+
+    public void deleteRecord(long shiftid){
+        Log.i("LOG", "Deleted record with shiftid = " + String.valueOf(shiftid));
+        db.delete("timecards", "shiftid" + " = ?", new String[] { String.valueOf(shiftid)});
+        db.delete("tips", "shiftid" + " = ?", new String[] { String.valueOf(shiftid)});
     }
 
 }

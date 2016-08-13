@@ -8,10 +8,10 @@
     <string name="hint_job">Job Name</string>
     <string name="hint_position">Position / Title</string>
     <string name="hint_pay">Base Hourly Pay</string>
-    <string-array name="time_rounding_array">
+    <string-array name="time_rounding_times">
         <item>Exact Time</item>
-        <item>Nearest 1/10th Hour</item>
-        <item>Nearest 1/4th Hour</item>
+        <item>Nearest 6 Minute</item>
+        <item>Nearest 15 Minute</item>
     </string-array>
     <string name="hint_overtime_1.5x">Overtime 1.5x Rate</string>
     <string name="hint_overtime_2.0x">Overtime 1.5x Rate</string>
@@ -23,6 +23,8 @@
     <string name="action_job_settings">Settings</string>
     <string name="action_job_edit">Edit</string>
     <string name="action_job_delete">Delete</string>
+    <string name="job_select_rounding">Select Time Rounding</string>
+
 
     <!-- Create New Record String -->
     <string name="hint_record_date">Record Date</string>

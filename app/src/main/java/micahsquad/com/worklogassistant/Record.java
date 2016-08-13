@@ -6,6 +6,28 @@ package micahsquad.com.worklogassistant;
 public class Record {
     private TimeCard timecard;
     private Tip tip;
+    private String jobName, jobPosition;
+
+    public Record(){
+        timecard = new TimeCard();
+        tip = new Tip();
+    }
+
+    public String getJobName(){
+        return jobName;
+    }
+
+    public void setJobName(String jobName){
+        this.jobName = jobName;
+    }
+
+    public String getJobPosition(){
+        return jobPosition;
+    }
+
+    public void setJobPosition(String jobPosition){
+        this.jobPosition = jobPosition;
+    }
 
     public Tip getTip() {
         return tip;

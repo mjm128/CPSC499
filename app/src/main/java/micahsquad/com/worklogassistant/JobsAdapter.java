@@ -124,7 +124,6 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
 
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
-            WorkLogDB db = new WorkLogDB(context);
             switch (menuItem.getItemId()) {
                 case R.id.action_job_edit:
                     Intent i = new Intent(context, CreateJobActivity.class);
@@ -133,8 +132,9 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
                     Toast.makeText(context, "Edit Job", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.action_job_delete:
-                    db = new WorkLogDB(context);
-                    db.deleteJob(job.getJobId());
+                    try ( WorkLogDB db = new WorkLogDB(context)){
+                        db.deleteJob(job.getJobId());
+                    }
                     removeItem(job);
                     Toast.makeText(context, "Delete Job", Toast.LENGTH_SHORT).show();
                     return true;

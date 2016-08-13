@@ -11,7 +11,7 @@
     <dimen name="item_offset">0dp</dimen>
     <dimen name="detail_backdrop_height">250dp</dimen>
     <dimen name="backdrop_title">30dp</dimen>
-    <dimen name="backdrop_subtitle">18dp</dimen>
+    <dimen name="backdrop_subtitle">22dp</dimen>
     <dimen name="job_card_margin">8dp</dimen>
     <dimen name="job_card_radius">0dp</dimen>
     <dimen name="job_cover_height">100dp</dimen>
@@ -28,5 +28,23 @@
     <dimen name="tab_padding_bottom">16dp</dimen>
     <dimen name="tab_label">14sp</dimen>
     <dimen name="custom_tab_layout_height">72dp</dimen>
+
+    <!--Record Card View-->
+    <dimen name="record_item_offset">0dp</dimen>
+    <dimen name="record_detail_backdrop_height">250dp</dimen>
+    <dimen name="record_text_line1">30dp</dimen>
+    <dimen name="record_text_line2">18dp</dimen>
+    <dimen name="record_card_margin">8dp</dimen>
+    <dimen name="record_card_radius">0dp</dimen>
+    <dimen name="record_cover_height">75dp</dimen>
+    <dimen name="record_title_padding">10dp</dimen>
+    <dimen name="record_title">16dp</dimen>
+    <dimen name="record_padding_bottom">3dp</dimen>
+    <dimen name="record_sublines">12dp</dimen>
+    <dimen name="record_sublines_padding">20dp</dimen>
+    <dimen name="record_ic_overflow_width">20dp</dimen>
+    <dimen name="record_ic_overflow_height">30dp</dimen>
+    <dimen name="record_ic_overflow_margin_top">5dp</dimen>
+
 
 </resources>
