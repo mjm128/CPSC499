@@ -22,7 +22,7 @@
             <ImageView
                 android:id="@+id/item_number"
                 android:layout_width="100dp"
-                android:layout_height="@dimen/record_cover_height"
+                android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true" />

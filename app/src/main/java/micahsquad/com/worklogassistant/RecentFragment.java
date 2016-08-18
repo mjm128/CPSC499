@@ -75,7 +75,9 @@ public class RecentFragment extends Fragment {
             a.getTimecard().setTimeWorked(c.getDouble(c.getColumnIndex("timeworked")));
             a.getTimecard().setDate(c.getString(c.getColumnIndex("shiftdate")));
             a.getTimecard().setShiftid(c.getInt(c.getColumnIndex("shiftid")));
+            a.getTimecard().setJobId(c.getInt(c.getColumnIndex("jobid")));
             a.getTip().setTip(c.getDouble(c.getColumnIndex("tip")));
+            a.getTip().setPercentTip(c.getDouble(c.getColumnIndex("tippercent")));
 
             recordsList.add(a);
             c.moveToNext();

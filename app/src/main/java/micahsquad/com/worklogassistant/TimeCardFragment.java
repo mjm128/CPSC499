@@ -60,8 +60,8 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
     public void onStart() {
         super.onStart();
         initializeEditText();
-
         defaultDateAndStart(500);
+        getView().requestFocus();
     }
 
     @Override
@@ -351,7 +351,7 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
     public Record.TimeCard getData(){
         Record.TimeCard timeCard = new Record.TimeCard();
         Double pay;
-        if (basePay.getText().toString() == ""){
+        if (basePay.getText().toString().equals("")){
             pay = -999.9;
         } else {
             pay = Double.valueOf(basePay.getText().toString());

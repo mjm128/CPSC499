@@ -72,19 +72,23 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        DecimalFormat formater = new DecimalFormat("0.00#");
+        DecimalFormat formater = new DecimalFormat("0.00");
         final Record record = recordList.get(position);
 
         holder.title.setText(record.getJobName() + " • " + record.getJobPosition());
 
         holder.subline1.setText(startEndTime(record));
-        holder.subline2.setText(record.getTimecard().getTimeWorked() + " hrs @ " + record.getTimecard().getBasePay() + "/hr -");
-        holder.subline3.setText(String.valueOf(record.getTip().getTip()));
+        if (record.getTimecard().getTimeWorked() >= 0) {
+            holder.subline2.setText(record.getTimecard().getTimeWorked() + " hrs @ " + record.getTimecard().getBasePay() + "/hr -");
+        }
+        if (record.getTip().getPercentTip() >= 0){
+            holder.subline3.setText("$"+formater.format(record.getTip().getTip())+" - "+formater.format(record.getTip().getPercentTip())+"%");
 
+        } else if (record.getTip().getTip() >= 0) {  holder.subline3.setText("$"+formater.format(record.getTip().getTip()));}
         holder.record = record;
 
 
-        String itemNumber = "";
+        String itemNumber = null;
         try {
             itemNumber = date.format(timeStampFormat.parse(record.getTimecard().getDate()));
         } catch (ParseException e){

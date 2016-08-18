@@ -13,10 +13,15 @@
         <item>Nearest 6 Minute</item>
         <item>Nearest 15 Minute</item>
     </string-array>
-    <string name="hint_overtime_1.5x">Overtime 1.5x Rate</string>
-    <string name="hint_overtime_2.0x">Overtime 1.5x Rate</string>
-    <string name="hint_overtime_1.5x_starttime">Overtime 1.5x Starting Time</string>
-    <string name="hint_overtime_2.0x_starttime">Overtime 2.0x Starting Time</string>
+    <string name="job_overtime_1.5x">Overtime 1.5x Rate</string>
+    <string-array name="job_overtime_hours1">
+        <item>After 8 hours</item>
+        <item>After 9 hours</item>
+        <item>After 10 hours</item>
+        <item>After 11 hours</item>
+        <item>After 12 hours</item>
+    </string-array>
+    <string name="job_overtime_2.0x">Overtime 2.0x Rate</string>
 
     <!-- Job Card Strings -->
     <color name="jobs_title">#4c4c4c</color>

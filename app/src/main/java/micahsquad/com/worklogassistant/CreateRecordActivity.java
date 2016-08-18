@@ -139,6 +139,7 @@ public class CreateRecordActivity extends AppCompatActivity {
         tip = f2.getData();
 
         tc.setJobId(jobid);
+        tip.setJobId(jobid);
         double time;
         tc.setTimeWorked(tcalc.calculateHours(tc.getStartTime(), tc.getEndTime()));
         if (tc.getTimeWorked() >= 0.0){
@@ -168,18 +169,15 @@ public class CreateRecordActivity extends AppCompatActivity {
             tc.setTimeWorked(-999.9);
             tc.setShiftPay(-999.9);
             tc.setTotalPay(-999.9);
-            tc.setTotalPay(-999.9);
         }
         tc.setTimeWorked(Double.valueOf(formater.format(tc.getTimeWorked())));
         long shiftid;
         try ( WorkLogDB db = new WorkLogDB(getApplicationContext())){
             shiftid = db.createNewTimeCard(tc);
         }
-        if (tip != null){
-            tip.setShiftId(shiftid);
-            try ( WorkLogDB db = new WorkLogDB(getApplicationContext())){
-                db.createNewTip(tip);
-            }
+        tip.setShiftId(shiftid);
+        try ( WorkLogDB db = new WorkLogDB(getApplicationContext())){
+            db.createNewTip(tip);
         }
     }
 

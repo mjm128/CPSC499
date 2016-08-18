@@ -126,16 +126,9 @@ public class TipFragment extends Fragment {
         t.setTippedOut(parseDouble(tippercent.getText().toString()));
         if (!tippercent.getText().toString().equals("0.00%")){
             t.setPercentTip((t.getTip() / t.getSales()) * 100);
-            hasTipRecord = true;
         } else { t.setPercentTip(-999.9); }
-        if (t.getTip() > -1.0 || t.getCcTip() > -1.0 || t.getSales() > -1.0 ||
-                t.getTax() > -1.0 || t.getRevenue() > -1.0 || !t.getComment().equals("")){
-            hasTipRecord = true;
-        }
-        if (hasTipRecord == true){
-            return t;
-        }
-        return null;
+
+        return t;
     }
 
     private double parseDouble(String s){
@@ -147,7 +140,6 @@ public class TipFragment extends Fragment {
         }
         return result;
     }
-
 
 }
 

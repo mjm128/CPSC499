@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/input_job"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         android:layout_below="@+id/input_layout_job_name"
         android:paddingTop="10dp">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/input_position"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         android:layout_below="@+id/input_layout_job_position"
         android:paddingTop="10dp">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/input_pay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,6 +77,59 @@
         style="@android:style/Widget.Material.Light.Spinner.Underlined"
         android:layout_below="@id/job_select_rounding" />
 
+    <LinearLayout
+        android:id="@+id/job_linearlayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center|center_horizontal"
+        android:layout_below="@+id/job_rounding_spinner">
+
+            <TextView
+                android:id="@+id/job_overtime1.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/job_overtime_1.5x" />
+
+            <TextView
+                android:id="@+id/job_overtime2.0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/job_overtime_2.0x" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/job_linearlayout1"
+        android:layout_weight="2"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <Spinner
+            android:id="@+id/job_overtime1.5_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/job_overtime1.5"
+            android:layout_weight="1"
+            android:paddingRight="0dp"
+            style="@android:style/Widget.Material.Light.Spinner.Underlined"/>
+
+        <Spinner
+            android:id="@+id/job_overtime2.0_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@android:style/Widget.Material.Light.Spinner.Underlined"/>
+    </LinearLayout>
 
 </RelativeLayout>
 

@@ -3,6 +3,7 @@ package micahsquad.com.worklogassistant;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,12 +18,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.text.TextWatcher;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
 public class CreateJobActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private EditText jobName, jobPosition, jobPay;
+    private TextInputEditText jobName, jobPosition, jobPay;
     private TextInputLayout inputLayoutName, inputLayoutPosition, inputLayoutPay;
     private Spinner spinner;
     private ArrayAdapter<CharSequence> adapter;
@@ -54,9 +56,9 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
         inputLayoutPosition = (TextInputLayout) findViewById(R.id.input_layout_job_position);
         inputLayoutPay = (TextInputLayout) findViewById(R.id.input_layout_job_pay);
 
-        jobName = (EditText) findViewById(R.id.input_job);
-        jobPosition = (EditText) findViewById(R.id.input_position);
-        jobPay = (EditText) findViewById(R.id.input_pay);
+        jobName = (TextInputEditText) findViewById(R.id.input_job);
+        jobPosition = (TextInputEditText) findViewById(R.id.input_position);
+        jobPay = (TextInputEditText) findViewById(R.id.input_pay);
         spinner = (Spinner) findViewById(R.id.job_rounding_spinner);
 
         adapter = ArrayAdapter.createFromResource(this, R.array.time_rounding_times, android.R.layout.simple_spinner_item);

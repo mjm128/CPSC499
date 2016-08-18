@@ -41,7 +41,7 @@
     <dimen name="record_title">16dp</dimen>
     <dimen name="record_padding_bottom">3dp</dimen>
     <dimen name="record_sublines">12dp</dimen>
-    <dimen name="record_sublines_padding">20dp</dimen>
+    <dimen name="record_sublines_padding">10dp</dimen>
     <dimen name="record_ic_overflow_width">20dp</dimen>
     <dimen name="record_ic_overflow_height">30dp</dimen>
     <dimen name="record_ic_overflow_margin_top">5dp</dimen>

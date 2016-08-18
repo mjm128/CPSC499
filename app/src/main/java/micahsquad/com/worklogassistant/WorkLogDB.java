@@ -165,7 +165,7 @@ public class WorkLogDB implements AutoCloseable {
                                     "tips.tax AS tax," +
                                     "tips.totalrevenue AS revenue," +
                                     "tips.totaltip AS tip," +
-                                    "tips.tippercent AS percent," +
+                                    "tips.tippercent AS tippercent," +
                                     "tips.tip_comment AS tip_comment " +
                                 "FROM " +
                                     "jobs " +
