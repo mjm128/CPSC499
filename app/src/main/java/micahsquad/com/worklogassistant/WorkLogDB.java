@@ -122,9 +122,55 @@ public class WorkLogDB implements AutoCloseable {
         values.put("totaltip", t.getTip());
         values.put("tippercent", t.getPercentTip());
         values.put("tip_comment", t.getComment());
+        values.put("tippedout", t.getTippedOut());
 
         Log.i("LOG", "Created a new Tip Record for jobid= " + String.valueOf(t.getJobId()));
         db.insert("tips", null, values);
+    }
+
+    public void updateTimeCard(){
+        ContentValues values = new ContentValues();
+    }
+
+    public void updateTip(){
+
+    }
+
+    public Record.Tip getTip(Long shiftid){
+        String shift = String.valueOf(shiftid);
+        Log.i("LOG", "Retrieved tip with shiftid = " + shift);
+        String selectQuery = "SELECT * FROM tips WHERE shiftid = ?";
+
+        Cursor c = db.rawQuery(selectQuery, new String[] {shift});
+        c.moveToFirst();
+
+        Record.Tip tip = new Record.Tip();
+        tip.setTip(c.getDouble(c.getColumnIndex("totaltip")));
+        tip.setPercentTip(c.getDouble(c.getColumnIndex("tippercent")));
+        tip.setTippedOut(c.getDouble(c.getColumnIndex("tippedout")));
+        tip.setRevenue(c.getDouble(c.getColumnIndex("totalrevenue")));
+        tip.setTax(c.getDouble(c.getColumnIndex("tax")));
+        tip.setCcTip(c.getDouble(c.getColumnIndex("cctips")));
+        tip.setSales(c.getDouble(c.getColumnIndex("netsales")));
+        tip.setTipId(c.getLong(c.getColumnIndex("tipid")));
+        tip.setJobId(c.getLong(c.getColumnIndex("jobid")));
+        tip.setShiftId(c.getLong(c.getColumnIndex("shiftid")));
+        tip.setComment(c.getString(c.getColumnIndex("tip_comment")));
+        return tip;
+    }
+
+    public Record.TimeCard getTimecard(Long shiftid){
+        String shift = String.valueOf(shiftid);
+        Log.i("LOG", "Retrieved timecard with shiftid = " + shift);
+        String selectQuery = "SELECT * FROM timecards WHERE shiftid = ?";
+
+        Cursor c = db.rawQuery(selectQuery, new String[] {shift});
+        c.moveToFirst();
+
+        Record.TimeCard timecard = new Record.TimeCard();
+
+
+        return timecard;
     }
 
     public Cursor getRecentRecords(){
@@ -166,7 +212,9 @@ public class WorkLogDB implements AutoCloseable {
                                     "tips.totalrevenue AS revenue," +
                                     "tips.totaltip AS tip," +
                                     "tips.tippercent AS tippercent," +
-                                    "tips.tip_comment AS tip_comment " +
+                                    "tips.tip_comment AS tip_comment," +
+                                    "tips.tippedout AS tippedout," +
+                                    "tips.tipid as tipid " +
                                 "FROM " +
                                     "jobs " +
                                     "JOIN timecards ON timecards.jobid = jobs.jobid " +

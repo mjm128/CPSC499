@@ -1,6 +1,7 @@
 package micahsquad.com.worklogassistant;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -18,7 +19,8 @@ import java.text.DecimalFormat;
 public class TipFragment extends Fragment {
     TextInputEditText tip, cc_tip, tipped_out, sales, tax, revenue, comment;
     TextView tippercent;
-
+    DecimalFormat formater = new DecimalFormat("0.##");
+    DecimalFormat formater1 = new DecimalFormat("0.00");
 
     public TipFragment() {
         // Required empty public constructor
@@ -50,6 +52,29 @@ public class TipFragment extends Fragment {
         sales.addTextChangedListener(new TipTextWatcher(sales));
         cc_tip.addTextChangedListener(new TipTextWatcher(cc_tip));
         tax.addTextChangedListener(new TipTextWatcher(tax));
+
+        final Bundle extras = getActivity().getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("shiftid")){
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Record.Tip t;
+                        try(WorkLogDB db = new WorkLogDB(getContext())) {
+                            t = db.getTip(extras.getLong("shiftid"));
+                        }
+                        if (t.getTip() > 0) { tip.setText(formater1.format(t.getTip())); }
+                        if (t.getSales() > 0) { sales.setText(formater1.format(t.getSales())); }
+                        if (t.getCcTip() > 0) { cc_tip.setText(formater1.format(t.getCcTip())); }
+                        if (t.getTippedOut() > 0) { tipped_out.setText(formater1.format(t.getTippedOut())); }
+                        if (t.getTax() > 0) { tax.setText(formater1.format(t.getTax())); }
+                        if (t.getRevenue() > 0) { revenue.setText(formater1.format(t.getRevenue())); }
+                        if (!t.getComment().equals("")) { comment.setText(t.getComment()); }
+                    }
+                }, 100);
+            }
+        }
     }
 
     private class TipTextWatcher implements TextWatcher {
@@ -95,7 +120,6 @@ public class TipFragment extends Fragment {
             if (!s.equals("") && !s1.equals("") && !s.equals(".") && !s1.equals(".")){
                 if ( Double.parseDouble(s1) > 0){
                     Double per = (Double.valueOf(s)/Double.valueOf(s1)) * 100.00;
-                    DecimalFormat formater = new DecimalFormat("0.##");
                     tippercent.setText(formater.format(per) + "%");
                 }
             } else {
@@ -123,7 +147,7 @@ public class TipFragment extends Fragment {
         t.setTax(parseDouble(tax.getText().toString()));
         t.setRevenue(parseDouble(revenue.getText().toString()));
         t.setComment(comment.getText().toString());
-        t.setTippedOut(parseDouble(tippercent.getText().toString()));
+        t.setTippedOut(parseDouble(tipped_out.getText().toString()));
         if (!tippercent.getText().toString().equals("0.00%")){
             t.setPercentTip((t.getTip() / t.getSales()) * 100);
         } else { t.setPercentTip(-999.9); }

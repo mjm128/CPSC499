@@ -76,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "totaltip REAL," +
             "tippercent REAL," +
             "tip_comment TEXT," +
+            "tippedout REAL," +
             "FOREIGN KEY(shiftid) REFERENCES timecards(shiftid) ON DELETE CASCADE," +
             "FOREIGN KEY(jobid) REFERENCES timecards(jobid) ON DELETE CASCADE);";
 

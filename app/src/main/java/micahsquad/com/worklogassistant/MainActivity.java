@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //Job creation Snackbar
             if (value != null) {
                 final View coordinatorLayoutView = findViewById(R.id.floating_plus);
-
+                getIntent().removeExtra("jobName");
                 SpannableStringBuilder snackbarText = new SpannableStringBuilder();
                 snackbarText.append("New Job Created: ");
                 int boldStart = snackbarText.length();
@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         db.deleteJob(job_id);
                         Snackbar snackbar1 = Snackbar.make(view, "Job has been deleted", Snackbar.LENGTH_LONG);
                         snackbar1.show();
-                        getIntent().removeExtra("jobName");
                     }
 
                 });

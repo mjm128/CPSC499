@@ -60,7 +60,21 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
     public void onStart() {
         super.onStart();
         initializeEditText();
-        defaultDateAndStart(500);
+        final Bundle extras = getActivity().getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("shiftid")){
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Record.TimeCard t;
+                        try(WorkLogDB db = new WorkLogDB(getContext())) {
+                            t = db.getTimecard(extras.getLong("shiftid"));
+                        }
+                    }
+                }, 100);
+            }
+        } else { defaultDateAndStart(500); }
         getView().requestFocus();
     }
 

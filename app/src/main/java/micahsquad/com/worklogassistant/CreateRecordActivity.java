@@ -27,7 +27,7 @@ public class CreateRecordActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private long jobid;
+    private long jobid, shiftid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +36,17 @@ public class CreateRecordActivity extends AppCompatActivity {
         final Bundle extras = getIntent().getExtras();
         if (extras != null) {
             jobid = extras.getLong("jobId");
+            if (extras.containsKey("shiftid")){
+                shiftid = extras.getLong("shiftid");
+            } else {shiftid = -1;}
         }
 
         setContentView(R.layout.activity_create_record);
-
-        getSupportActionBar().setTitle("New Record");
+        if (shiftid > -1){
+            getSupportActionBar().setTitle("Edit Record");
+        } else {
+            getSupportActionBar().setTitle("New Record");
+        }
         getSupportActionBar().setElevation(0);
         getSupportActionBar().setHomeButtonEnabled(true);;
 

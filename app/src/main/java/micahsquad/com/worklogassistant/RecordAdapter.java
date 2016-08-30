@@ -37,6 +37,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.MyViewHold
     SimpleDateFormat date = new SimpleDateFormat("M/d/yyyy");
     SimpleDateFormat day = new SimpleDateFormat("EEEE");
     SimpleDateFormat time = new SimpleDateFormat("h:mm a");
+    DecimalFormat formater = new DecimalFormat("0.00");
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, subline1, subline2, subline3, dayname;
@@ -72,21 +73,19 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        DecimalFormat formater = new DecimalFormat("0.00");
         final Record record = recordList.get(position);
 
         holder.title.setText(record.getJobName() + " • " + record.getJobPosition());
 
         holder.subline1.setText(startEndTime(record));
         if (record.getTimecard().getTimeWorked() >= 0) {
-            holder.subline2.setText(record.getTimecard().getTimeWorked() + " hrs @ " + record.getTimecard().getBasePay() + "/hr -");
+            holder.subline2.setText(record.getTimecard().getTimeWorked()+" hrs @ $"+ formater.format(record.getTimecard().getBasePay())+"/hr");
         }
         if (record.getTip().getPercentTip() >= 0){
             holder.subline3.setText("$"+formater.format(record.getTip().getTip())+" - "+formater.format(record.getTip().getPercentTip())+"%");
 
         } else if (record.getTip().getTip() >= 0) {  holder.subline3.setText("$"+formater.format(record.getTip().getTip()));}
         holder.record = record;
-
 
         String itemNumber = null;
         try {
