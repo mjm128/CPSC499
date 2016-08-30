@@ -38,6 +38,7 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
     SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     SimpleDateFormat displayTimeFormat = new SimpleDateFormat("M/d/yyyy h:mm a");
     SimpleDateFormat displayDateFormat = new SimpleDateFormat("E, MMMM d, yyyy");
+    DecimalFormat formater1 = new DecimalFormat("0.00#");
 
     public TimeCardFragment() {
         // Required empty public constructor
@@ -71,10 +72,11 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
                         try(WorkLogDB db = new WorkLogDB(getContext())) {
                             t = db.getTimecard(extras.getLong("shiftid"));
                         }
+                        populateText(t);
                     }
-                }, 100);
-            }
-        } else { defaultDateAndStart(500); }
+                }, 300);
+            } else { defaultDateAndStart(500); }
+        }
         getView().requestFocus();
     }
 
@@ -402,6 +404,32 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
         return timeCard;
     }
 
+    public void populateText(Record.TimeCard t){
+        date.setText(TimeStamp2Date(t.getDate()));
+        startTime.setText(TimeStamp2Time(t.getStartTime()));
+        endTime.setText(TimeStamp2Time(t.getEndTime()));
+        breakStart1.setText(TimeStamp2Time(t.getBreakStart1()));
+        breakStart2.setText(TimeStamp2Time(t.getBreakStart2()));
+        breakStart3.setText(TimeStamp2Time(t.getBreakStart3()));
+        breakStart4.setText(TimeStamp2Time(t.getBreakStart4()));
+        breakStart5.setText(TimeStamp2Time(t.getBreakStart5()));
+        breakEnd1.setText(TimeStamp2Time(t.getBreakEnd1()));
+        breakEnd2.setText(TimeStamp2Time(t.getBreakEnd2()));
+        breakEnd3.setText(TimeStamp2Time(t.getBreakEnd3()));
+        breakEnd4.setText(TimeStamp2Time(t.getBreakEnd4()));
+        breakEnd5.setText(TimeStamp2Time(t.getBreakEnd5()));
+        lunchStart1.setText(TimeStamp2Time(t.getLunchStart1()));
+        lunchStart2.setText(TimeStamp2Time(t.getLunchStart2()));
+        lunchStart3.setText(TimeStamp2Time(t.getLunchStart3()));
+        lunchStart4.setText(TimeStamp2Time(t.getLunchStart4()));
+        lunchEnd1.setText(TimeStamp2Time(t.getLunchEnd1()));
+        lunchEnd2.setText(TimeStamp2Time(t.getLunchEnd2()));
+        lunchEnd3.setText(TimeStamp2Time(t.getLunchEnd3()));
+        lunchEnd4.setText(TimeStamp2Time(t.getLunchEnd4()));
+        comment.setText(t.getComment());
+        basePay.setText(formater1.format(t.getBasePay()));
+    }
+
     private String Time2TimeStamp(String s){
         try {
             s = timeStampFormat.format(displayTimeFormat.parse(s));
@@ -419,6 +447,25 @@ public class TimeCardFragment extends Fragment implements View.OnClickListener, 
         }
         return s;
     }
+
+    private String TimeStamp2Date(String s){
+        try {
+            s = displayDateFormat.format(timeStampFormat.parse(s));
+        } catch (ParseException e) {
+            s = "";
+        }
+        return s;
+    }
+
+    private String TimeStamp2Time(String s){
+        try {
+            s = displayTimeFormat.format(timeStampFormat.parse(s));
+        } catch (ParseException e) {
+            s = "";
+        }
+        return s;
+    }
+
 
     public boolean dateCheck(){
         String t1 = null, t2 = null;

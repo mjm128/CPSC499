@@ -177,13 +177,24 @@ public class CreateRecordActivity extends AppCompatActivity {
             tc.setTotalPay(-999.9);
         }
         tc.setTimeWorked(Double.valueOf(formater.format(tc.getTimeWorked())));
-        long shiftid;
-        try ( WorkLogDB db = new WorkLogDB(getApplicationContext())){
-            shiftid = db.createNewTimeCard(tc);
-        }
-        tip.setShiftId(shiftid);
-        try ( WorkLogDB db = new WorkLogDB(getApplicationContext())){
-            db.createNewTip(tip);
+        if (shiftid >= 0){
+            tc.setShiftId(shiftid);
+            tip.setShiftId(shiftid);
+            try (WorkLogDB db = new WorkLogDB(getApplicationContext())) {
+                db.updateTimeCard(tc);
+            }
+            try (WorkLogDB db = new WorkLogDB(getApplicationContext())) {
+                db.updateTip(tip);
+            }
+        } else {
+            long shift_id;
+            try (WorkLogDB db = new WorkLogDB(getApplicationContext())) {
+                shift_id = db.createNewTimeCard(tc);
+            }
+            tip.setShiftId(shift_id);
+            try (WorkLogDB db = new WorkLogDB(getApplicationContext())) {
+                db.createNewTip(tip);
+            }
         }
     }
 

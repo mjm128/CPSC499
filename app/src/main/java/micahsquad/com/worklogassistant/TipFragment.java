@@ -20,7 +20,7 @@ public class TipFragment extends Fragment {
     TextInputEditText tip, cc_tip, tipped_out, sales, tax, revenue, comment;
     TextView tippercent;
     DecimalFormat formater = new DecimalFormat("0.##");
-    DecimalFormat formater1 = new DecimalFormat("0.00");
+    DecimalFormat formater1 = new DecimalFormat("0.00#");
 
     public TipFragment() {
         // Required empty public constructor

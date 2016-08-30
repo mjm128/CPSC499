@@ -79,11 +79,11 @@ public class Record {
             this.timeWorked = timeWorked;
         }
 
-        public long getShiftid() {
+        public long getShiftId() {
             return shiftid;
         }
 
-        public void setShiftid(int shiftid) {
+        public void setShiftId(long shiftid) {
             this.shiftid = shiftid;
         }
 

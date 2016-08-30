@@ -127,7 +127,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), CreateRecordActivity.class);
-                i.putExtra("shiftid", record.getTimecard().getShiftid());
+                i.putExtra("jobId", record.getTimecard().getJobId());
+                i.putExtra("shiftid", record.getTimecard().getShiftId());
                 view.getContext().startActivity(i);
             }
         });
@@ -175,11 +176,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.MyViewHold
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.action_job_edit:
-
+                    Intent i = new Intent(context, CreateRecordActivity.class);
+                    i.putExtra("jobId", record.getTimecard().getJobId());
+                    i.putExtra("shiftid", record.getTimecard().getShiftId());
+                    context.startActivity(i);
                     return true;
                 case R.id.action_job_delete:
                     try ( WorkLogDB db = new WorkLogDB(context)){
-                        db.deleteRecord(record.getTimecard().getShiftid());
+                        db.deleteRecord(record.getTimecard().getShiftId());
                     }
                     removeItem(record);
                     return true;
@@ -204,7 +208,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.MyViewHold
         Record element;
         for (int i = 0; i < recordList.size(); i++){
             element = recordList.get(i);
-            if (element.getTimecard().getShiftid() == shiftid){
+            if (element.getTimecard().getShiftId() == shiftid){
                 removeItem(element);
                 return;
             }

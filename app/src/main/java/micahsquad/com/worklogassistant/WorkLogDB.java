@@ -128,12 +128,55 @@ public class WorkLogDB implements AutoCloseable {
         db.insert("tips", null, values);
     }
 
-    public void updateTimeCard(){
+    public void updateTimeCard(Record.TimeCard t){
         ContentValues values = new ContentValues();
+        values.put("jobid", t.getJobId());
+        values.put("shiftdate", t.getDate());
+        values.put("starttime", t.getStartTime());
+        values.put("endtime", t.getEndTime());
+        values.put("first_breakstart", t.getBreakStart1());
+        values.put("second_breakstart", t.getBreakStart2());
+        values.put("third_breakstart", t.getBreakStart3());
+        values.put("fourth_breakstart", t.getBreakStart4());
+        values.put("fifth_breakstart", t.getBreakStart5());
+        values.put("first_breakend", t.getBreakEnd1());
+        values.put("second_breakend", t.getBreakEnd2());
+        values.put("third_breakend", t.getBreakEnd3());
+        values.put("fourth_breakend", t.getBreakEnd4());
+        values.put("fifth_breakend", t.getBreakEnd5());
+        values.put("first_lunchstart", t.getLunchStart1());
+        values.put("second_lunchstart", t.getLunchStart2());
+        values.put("third_lunchstart", t.getLunchStart3());
+        values.put("fourth_lunchstart", t.getLunchStart4());
+        values.put("first_lunchend", t.getLunchEnd1());
+        values.put("second_lunchend", t.getLunchEnd2());
+        values.put("third_lunchend", t.getLunchEnd3());
+        values.put("fourth_lunchend", t.getLunchEnd4());
+        values.put("payrate", t.getBasePay());
+        values.put("timeworked", t.getTimeWorked());
+        values.put("shiftpay", t.getShiftPay());
+        values.put("totalpay", t.getTotalPay());
+        values.put("comment", t.getComment());
+
+        Log.i("LOG", "Updated TimeCard with shiftid value of " + String.valueOf(t.getShiftId()));
+        db.update("timecards", values, "shiftid=" + t.getShiftId(), null);
     }
 
-    public void updateTip(){
+    public void updateTip(Record.Tip t){
+        ContentValues values = new ContentValues();
+        values.put("shiftid", t.getShiftId());
+        values.put("jobid", t.getJobId());
+        values.put("netsales", t.getSales());
+        values.put("cctips", t.getCcTip());
+        values.put("tax", t.getTax());
+        values.put("totalrevenue", t.getRevenue());
+        values.put("totaltip", t.getTip());
+        values.put("tippercent", t.getPercentTip());
+        values.put("tip_comment", t.getComment());
+        values.put("tippedout", t.getTippedOut());
 
+        Log.i("LOG", "Updated Tip with shiftid value of " + String.valueOf(t.getShiftId()));
+        db.update("tips", values, "shiftid=" + t.getShiftId(), null);
     }
 
     public Record.Tip getTip(Long shiftid){
@@ -168,7 +211,34 @@ public class WorkLogDB implements AutoCloseable {
         c.moveToFirst();
 
         Record.TimeCard timecard = new Record.TimeCard();
-
+        timecard.setJobId(c.getLong(c.getColumnIndex("jobid")));
+        timecard.setShiftId(c.getLong(c.getColumnIndex("shiftid")));
+        timecard.setComment(c.getString(c.getColumnIndex("comment")));
+        timecard.setTimeWorked(c.getDouble(c.getColumnIndex("timeworked")));
+        timecard.setBasePay(c.getDouble(c.getColumnIndex("payrate")));
+        timecard.setDate(c.getString(c.getColumnIndex("shiftdate")));
+        timecard.setStartTime(c.getString(c.getColumnIndex("starttime")));
+        timecard.setEndTime(c.getString(c.getColumnIndex("endtime")));
+        timecard.setShiftPay(c.getDouble(c.getColumnIndex("shiftpay")));
+        timecard.setTotalPay(c.getDouble(c.getColumnIndex("totalpay")));
+        timecard.setBreakStart1(c.getString(c.getColumnIndex("first_breakstart")));
+        timecard.setBreakStart2(c.getString(c.getColumnIndex("second_breakstart")));
+        timecard.setBreakStart3(c.getString(c.getColumnIndex("third_breakstart")));
+        timecard.setBreakStart4(c.getString(c.getColumnIndex("fourth_breakstart")));
+        timecard.setBreakStart5(c.getString(c.getColumnIndex("fifth_breakstart")));
+        timecard.setBreakEnd1(c.getString(c.getColumnIndex("first_breakend")));
+        timecard.setBreakEnd2(c.getString(c.getColumnIndex("second_breakend")));
+        timecard.setBreakEnd3(c.getString(c.getColumnIndex("third_breakend")));
+        timecard.setBreakEnd4(c.getString(c.getColumnIndex("fourth_breakend")));
+        timecard.setBreakEnd5(c.getString(c.getColumnIndex("fifth_breakend")));
+        timecard.setLunchStart1(c.getString(c.getColumnIndex("first_lunchstart")));
+        timecard.setLunchStart2(c.getString(c.getColumnIndex("second_lunchstart")));
+        timecard.setLunchStart3(c.getString(c.getColumnIndex("third_lunchstart")));
+        timecard.setLunchStart4(c.getString(c.getColumnIndex("fourth_lunchstart")));
+        timecard.setLunchEnd1(c.getString(c.getColumnIndex("first_lunchend")));
+        timecard.setLunchEnd2(c.getString(c.getColumnIndex("second_lunchend")));
+        timecard.setLunchEnd3(c.getString(c.getColumnIndex("third_lunchend")));
+        timecard.setLunchEnd4(c.getString(c.getColumnIndex("fourth_lunchend")));
 
         return timecard;
     }
