@@ -19,9 +19,17 @@
         <item>After 9 hours</item>
         <item>After 10 hours</item>
         <item>After 11 hours</item>
-        <item>After 12 hours</item>
+        <item>None</item>
     </string-array>
     <string name="job_overtime_2.0x">Overtime 2.0x Rate</string>
+    <string-array name="job_overtime_hours2">
+        <item>After 12 hours</item>
+        <item>After 13 hours</item>
+        <item>After 14 hours</item>
+        <item>After 15 hours</item>
+        <item>After 16 hours</item>
+        <item>None</item>
+    </string-array>
 
     <!-- Job Card Strings -->
     <color name="jobs_title">#4c4c4c</color>

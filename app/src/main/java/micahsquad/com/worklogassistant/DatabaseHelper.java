@@ -27,7 +27,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "jobname TEXT," +
             "jobposition TEXT," +
             "jobpay REAL," +
-            "timerounding TEXT);";
+            "timerounding TEXT," +
+            "overtime1 TEXT," +
+            "overtime2 TEXT);";
 
     //Table timecards
     public static final String TIME_CARDS_CREATE_TABLE =

@@ -9,18 +9,21 @@ public class Job {
     private String position;
     private double pay;
     private String rounding;
-
+    private String overtime1;
+    private String overtime2;
 
     public Job(){
 
     }
 
-    public Job(long jobid, String name, String position, double pay, String rounding){
+    public Job(long jobid, String name, String position, double pay, String rounding, String overtime1, String overtime2){
         this.jobid = jobid;
         this.name = name;
         this.position = position;
         this.pay = pay;
         this.rounding = rounding;
+        this.overtime1 = overtime1;
+        this.overtime2 = overtime2;
     }
 
     public long getJobId() { return jobid; }
@@ -54,5 +57,21 @@ public class Job {
     public String getRounding() { return rounding; }
 
     public void setRounding(String rounding) { this.rounding = rounding; }
+
+    public String getOvertime2() {
+        return overtime2;
+    }
+
+    public void setOvertime2(String overtime2) {
+        this.overtime2 = overtime2;
+    }
+
+    public String getOvertime1() {
+        return overtime1;
+    }
+
+    public void setOvertime1(String overtime1) {
+        this.overtime1 = overtime1;
+    }
 
 }

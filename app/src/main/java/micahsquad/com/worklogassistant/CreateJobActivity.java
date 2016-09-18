@@ -15,10 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.text.TextWatcher;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
@@ -26,8 +24,8 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
 
     private TextInputEditText jobName, jobPosition, jobPay;
     private TextInputLayout inputLayoutName, inputLayoutPosition, inputLayoutPay;
-    private Spinner spinner;
-    private ArrayAdapter<CharSequence> adapter;
+    private Spinner roundingSpinner, overtime1, overtime2;
+    private ArrayAdapter<CharSequence> roundingAdapter, overtime1Adapter, overtime2Adapter;
     private Context context;
     private long jobid;
     private String rounding;
@@ -59,12 +57,24 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
         jobName = (TextInputEditText) findViewById(R.id.input_job);
         jobPosition = (TextInputEditText) findViewById(R.id.input_position);
         jobPay = (TextInputEditText) findViewById(R.id.input_pay);
-        spinner = (Spinner) findViewById(R.id.job_rounding_spinner);
+        roundingSpinner = (Spinner) findViewById(R.id.job_rounding_spinner);
+        overtime1 = (Spinner) findViewById(R.id.job_overtime1_5_spinner);
+        overtime2 = (Spinner) findViewById(R.id.job_overtime2_0_spinner);
 
-        adapter = ArrayAdapter.createFromResource(this, R.array.time_rounding_times, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        roundingAdapter = ArrayAdapter.createFromResource(this, R.array.time_rounding_times, android.R.layout.simple_spinner_item);
+        roundingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        roundingSpinner.setAdapter(roundingAdapter);
+        roundingSpinner.setOnItemSelectedListener(this);
+
+        overtime1Adapter = ArrayAdapter.createFromResource(this, R.array.job_overtime_hours1, android.R.layout.simple_spinner_item);
+        overtime1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        overtime1.setAdapter(overtime1Adapter);
+        overtime1.setOnItemSelectedListener(this);
+
+        overtime2Adapter = ArrayAdapter.createFromResource(this, R.array.job_overtime_hours2, android.R.layout.simple_spinner_item);
+        overtime2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        overtime2.setAdapter(overtime2Adapter);
+        overtime2.setOnItemSelectedListener(this);
 
         if (extras != null){
             jobid = extras.getLong("jobId");
@@ -79,17 +89,19 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
                     try(WorkLogDB db = new WorkLogDB(context)) {
                         j = db.getJob(jobid);
                     }
+                    int spinnerPosition = roundingAdapter.getPosition(j.getRounding());
+                    roundingSpinner.setSelection(spinnerPosition);
+                    spinnerPosition = overtime1Adapter.getPosition(j.getOvertime1());
+                    overtime1.setSelection(spinnerPosition);
+                    spinnerPosition = overtime2Adapter.getPosition(j.getOvertime2());
+                    overtime2.setSelection(spinnerPosition);
+
                     jobName.setText(j.getName());
                     jobPosition.setText(j.getPosition());
                     DecimalFormat formater = new DecimalFormat("0.00#");
                     jobPay.setText(formater.format(j.getPay()));
-                    int spinnerPosition = adapter.getPosition(j.getRounding());
-                    spinner.setSelection(spinnerPosition);
                 }
             }, 500);
-
-        } else {
-
 
         }
     }
@@ -140,17 +152,22 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
 
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         final Bundle extras = getIntent().getExtras();
+        Job j = new Job();
+        j.setName(jobName.getText().toString());
+        j.setPosition(jobPosition.getText().toString());
+        j.setPay(Double.parseDouble(jobPay.getText().toString()));
+        j.setRounding(roundingSpinner.getSelectedItem().toString());
+        j.setOvertime1(overtime1.getSelectedItem().toString());
+        j.setOvertime2(overtime2.getSelectedItem().toString());
         if (extras != null){
             try ( WorkLogDB db = new WorkLogDB(context)) {
-                db.updateJob(jobid,jobName.getText().toString(), jobPosition.getText().toString(),
-                        Double.parseDouble(jobPay.getText().toString()), rounding);
+                db.updateJob(jobid, j);
             }
 
         } else {
             long job_id;
             try ( WorkLogDB db = new WorkLogDB(context)){
-                job_id = db.createJob(jobName.getText().toString(), jobPosition.getText().toString(),
-                        Double.parseDouble(jobPay.getText().toString()), rounding);
+                job_id = db.createJob(j);
             }
 
             //Pass the job name to the main activity

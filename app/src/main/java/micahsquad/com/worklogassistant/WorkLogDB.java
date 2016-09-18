@@ -27,14 +27,16 @@ public class WorkLogDB implements AutoCloseable {
         }
     }
 
-    public long createJob(String job_name, String job_position, Double job_pay, String rounding){
+    public long createJob(Job j){
         ContentValues values = new ContentValues();
-        values.put("jobname", job_name);
-        values.put("jobposition", job_position);
-        values.put("jobpay", job_pay);
-        values.put("timerounding", rounding);
-        long job_id = db.insert("jobs", null, values);
+        values.put("jobname", j.getName());
+        values.put("jobposition", j.getPosition());
+        values.put("jobpay", j.getPay());
+        values.put("timerounding", j.getRounding());
+        values.put("overtime1", j.getOvertime1());
+        values.put("overtime2", j.getOvertime2());
 
+        long job_id = db.insert("jobs", null, values);
         Log.e("LOG", "New job created with jobid value of " + String.valueOf(job_id));
         return job_id;
     }
@@ -47,7 +49,7 @@ public class WorkLogDB implements AutoCloseable {
     public Job getJob(long job_id){
         String jobid = String.valueOf(job_id);
         Log.i("LOG", "Retrieved job by jobid = " + jobid);
-        String selectQuery = "SELECT jobname, jobposition, jobpay, timerounding FROM jobs WHERE jobid = ?";
+        String selectQuery = "SELECT * FROM jobs WHERE jobid = ?";
 
         Cursor c = db.rawQuery(selectQuery, new String[] {jobid});
         c.moveToFirst();
@@ -56,15 +58,19 @@ public class WorkLogDB implements AutoCloseable {
         j.setPosition(c.getString(c.getColumnIndex("jobposition")));
         j.setPay(c.getDouble(c.getColumnIndex("jobpay")));
         j.setRounding(c.getString(c.getColumnIndex("timerounding")));
+        j.setOvertime1(c.getString(c.getColumnIndex("overtime1")));
+        j.setOvertime2(c.getString(c.getColumnIndex("overtime2")));
         return j;
     }
 
-    public void updateJob(long job_id, String job_name, String job_position, double job_pay, String rounding){
+    public void updateJob(long job_id, Job j){
         ContentValues values = new ContentValues();
-        values.put("jobname", job_name);
-        values.put("jobposition", job_position);
-        values.put("jobpay", job_pay);
-        values.put("timerounding", rounding);
+        values.put("jobname", j.getName());
+        values.put("jobposition", j.getPosition());
+        values.put("jobpay", j.getPay());
+        values.put("timerounding", j.getRounding());
+        values.put("overtime1", j.getOvertime1());
+        values.put("overtime2", j.getOvertime2());
         Log.i("LOG", "Updated job with jobid value of " + String.valueOf(job_id));
         db.update("jobs", values, "jobid=" + job_id, null);
     }
