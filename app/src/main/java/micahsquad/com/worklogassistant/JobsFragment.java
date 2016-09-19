@@ -90,6 +90,9 @@ public class JobsFragment extends Fragment {
             a.setName(c.getString((c.getColumnIndex("jobname"))));
             a.setPosition(c.getString((c.getColumnIndex("jobposition"))));
             a.setPay(c.getDouble((c.getColumnIndex("jobpay"))));
+            a.setRounding(c.getString(c.getColumnIndex("timerounding")));
+            a.setOvertime1(c.getString(c.getColumnIndex("overtime1")));
+            a.setOvertime2(c.getString(c.getColumnIndex("overtime2")));
 
             jobsList.add(a);
             c.moveToNext();
@@ -126,5 +129,31 @@ public class JobsFragment extends Fragment {
 
     public void delete(int job_id) {
        adapter.removeItem(job_id);
+    }
+
+    public void updateJobs(){
+        jobsList.clear();
+
+        try (WorkLogDB db = new WorkLogDB(context)) {
+            c = db.getAllJobs();
+            int numOfJobs = c.getCount();
+            c.moveToFirst();
+            for (int i=0; i<numOfJobs; i++){
+                Job a = new Job();
+                a.setJobId(c.getInt(c.getColumnIndex("jobid")));
+                a.setName(c.getString((c.getColumnIndex("jobname"))));
+                a.setPosition(c.getString((c.getColumnIndex("jobposition"))));
+                a.setPay(c.getDouble((c.getColumnIndex("jobpay"))));
+                a.setRounding(c.getString(c.getColumnIndex("timerounding")));
+                a.setOvertime1(c.getString(c.getColumnIndex("overtime1")));
+                a.setOvertime2(c.getString(c.getColumnIndex("overtime2")));
+
+                jobsList.add(a);
+                c.moveToNext();
+            }
+            c.close();
+            adapter.notifyDataSetChanged();
+        }
+
     }
 }

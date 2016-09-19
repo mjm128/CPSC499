@@ -1,5 +1,6 @@
 package micahsquad.com.worklogassistant;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -28,7 +29,6 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
     private ArrayAdapter<CharSequence> roundingAdapter, overtime1Adapter, overtime2Adapter;
     private Context context;
     private long jobid;
-    private String rounding;
 
     private WorkLogDB db;
 
@@ -108,7 +108,7 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        rounding = adapterView.getItemAtPosition(position).toString();
+
     }
 
     @Override
@@ -150,7 +150,7 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
             return;
         }
 
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        Intent resultIntent = new Intent();
         final Bundle extras = getIntent().getExtras();
         Job j = new Job();
         j.setName(jobName.getText().toString());
@@ -162,6 +162,9 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
         if (extras != null){
             try ( WorkLogDB db = new WorkLogDB(context)) {
                 db.updateJob(jobid, j);
+
+                resultIntent.putExtra("updatedJob", jobid);
+                setResult(Activity.RESULT_OK, resultIntent);
             }
 
         } else {
@@ -169,12 +172,11 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
             try ( WorkLogDB db = new WorkLogDB(context)){
                 job_id = db.createJob(j);
             }
-
-            //Pass the job name to the main activity
-            i.putExtra("jobName", jobName.getText().toString());
-            i.putExtra("jobId", job_id);
+            resultIntent.putExtra("jobName", jobName.getText().toString());
+            resultIntent.putExtra("jobId", job_id);
+            setResult(Activity.RESULT_OK, resultIntent);
         }
-        startActivity(i);
+
         finish();
     }
 

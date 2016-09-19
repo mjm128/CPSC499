@@ -1,5 +1,6 @@
 package micahsquad.com.worklogassistant;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
@@ -98,7 +99,6 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), CreateRecordActivity.class);
                 i.putExtra("jobId", job.getJobId());
-                i.putExtra("pay", job.getPay());
                 view.getContext().startActivity(i);
             }
         });
@@ -128,7 +128,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
                 case R.id.action_job_edit:
                     Intent i = new Intent(context, CreateJobActivity.class);
                     i.putExtra("jobId", job.getJobId());
-                    context.startActivity(i);
+                    ((Activity) context).startActivityForResult(i, 1);
                     Toast.makeText(context, "Edit Job", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.action_job_delete:
@@ -161,6 +161,29 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
             element = jobList.get(i);
             if (element.getJobId() == job_id){
                 removeItem(element);
+                return;
+            }
+        }
+
+    }
+
+    public void updateJob(Job information, Job newInfo){
+        int position = jobList.indexOf(information);
+        jobList.get(position).setName(newInfo.getName());
+        jobList.get(position).setPosition(newInfo.getPosition());
+        jobList.get(position).setPay(newInfo.getPay());
+        jobList.get(position).setRounding(newInfo.getRounding());
+        jobList.get(position).setOvertime1(newInfo.getOvertime1());
+        jobList.get(position).setOvertime2(newInfo.getOvertime2());
+        notifyItemChanged(position);
+    }
+
+    public void updateJob(int job_id, Job j){
+        Job element;
+        for (int i=0; i < jobList.size(); i++){
+            element = jobList.get(i);
+            if (element.getJobId() == job_id){
+                updateJob(element, j);
                 return;
             }
         }

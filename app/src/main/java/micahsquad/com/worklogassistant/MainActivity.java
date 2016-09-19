@@ -1,5 +1,6 @@
 package micahsquad.com.worklogassistant;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,7 +22,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), CreateJobActivity.class));
+                Intent i = new Intent(context, CreateJobActivity.class);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -96,6 +97,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_jobs_layout);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (1) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    if (data.hasExtra("updatedJob")){
+                        FragmentManager fragment = getFragmentManager();
+                        JobsFragment jobs = (JobsFragment)fragment.findFragmentByTag("JOBS");
+                        jobs.updateJobs();
+                    }
+                    if (data.hasExtra("jobId")){
+
+                    }
+
+                }
+                break;
+            }
+        }
     }
 
     @Override
