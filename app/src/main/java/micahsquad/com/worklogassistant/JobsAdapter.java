@@ -155,35 +155,12 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.MyViewHolder> 
         notifyItemRemoved(position);
     }
 
-    public void removeItem(int job_id) {
+    public void removeItem(long job_id) {
         Job element;
         for (int i = 0; i < jobList.size(); i++){
             element = jobList.get(i);
             if (element.getJobId() == job_id){
                 removeItem(element);
-                return;
-            }
-        }
-
-    }
-
-    public void updateJob(Job information, Job newInfo){
-        int position = jobList.indexOf(information);
-        jobList.get(position).setName(newInfo.getName());
-        jobList.get(position).setPosition(newInfo.getPosition());
-        jobList.get(position).setPay(newInfo.getPay());
-        jobList.get(position).setRounding(newInfo.getRounding());
-        jobList.get(position).setOvertime1(newInfo.getOvertime1());
-        jobList.get(position).setOvertime2(newInfo.getOvertime2());
-        notifyItemChanged(position);
-    }
-
-    public void updateJob(int job_id, Job j){
-        Job element;
-        for (int i=0; i < jobList.size(); i++){
-            element = jobList.get(i);
-            if (element.getJobId() == job_id){
-                updateJob(element, j);
                 return;
             }
         }

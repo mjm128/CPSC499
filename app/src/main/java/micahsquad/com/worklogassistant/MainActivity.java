@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
             case (1) : {
@@ -111,7 +111,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         jobs.updateJobs();
                     }
                     if (data.hasExtra("jobId")){
+                        FragmentManager fragment = getFragmentManager();
+                        JobsFragment jobs = (JobsFragment)fragment.findFragmentByTag("JOBS");
+                        jobs.updateJobs();
 
+                        String value = data.getStringExtra("jobName");
+                        final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                        getIntent().removeExtra("jobName");
+                        SpannableStringBuilder snackbarText = new SpannableStringBuilder();
+                        snackbarText.append("New Job Created: ");
+                        int boldStart = snackbarText.length();
+                        snackbarText.append(value);
+                        snackbarText.setSpan(new ForegroundColorSpan(0xff00BFA5), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        snackbarText.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        Snackbar snackbar = Snackbar.make(coordinatorLayoutView, snackbarText, Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                long job_id = data.getLongExtra("jobId", 0);
+
+                                FragmentManager fragment = getFragmentManager();
+                                JobsFragment jobs = (JobsFragment)fragment.findFragmentByTag("JOBS");
+                                jobs.delete(job_id);
+
+                                db = new WorkLogDB(context);
+                                db.deleteJob(job_id);
+                                Snackbar snackbar1 = Snackbar.make(view, "Job has been deleted", Snackbar.LENGTH_LONG);
+                                snackbar1.show();
+                            }
+
+                        });
+                        snackbar.setActionTextColor(0xFFD32F2F); //hex for red
+                        snackbar.show();
                     }
 
                 }

@@ -127,7 +127,7 @@ public class JobsFragment extends Fragment {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
-    public void delete(int job_id) {
+    public void delete(long job_id) {
        adapter.removeItem(job_id);
     }
 
