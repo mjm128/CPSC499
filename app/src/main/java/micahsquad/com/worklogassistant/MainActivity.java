@@ -52,41 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        //Handle Snackbar creations
-        final Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            String value = extras.getString("jobName");
-            //Job creation Snackbar
-            if (value != null) {
-                final View coordinatorLayoutView = findViewById(R.id.floating_plus);
-                getIntent().removeExtra("jobName");
-                SpannableStringBuilder snackbarText = new SpannableStringBuilder();
-                snackbarText.append("New Job Created: ");
-                int boldStart = snackbarText.length();
-                snackbarText.append(value);
-                snackbarText.setSpan(new ForegroundColorSpan(0xff00BFA5), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                snackbarText.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                Snackbar snackbar = Snackbar.make(coordinatorLayoutView, snackbarText, Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        long job_id = extras.getLong("jobId");
-
-                        FragmentManager fragment = getFragmentManager();
-                        JobsFragment jobs = (JobsFragment)fragment.findFragmentByTag("JOBS");
-                        jobs.delete((int) job_id);
-
-                        db = new WorkLogDB(context);
-                        db.deleteJob(job_id);
-                        Snackbar snackbar1 = Snackbar.make(view, "Job has been deleted", Snackbar.LENGTH_LONG);
-                        snackbar1.show();
-                    }
-
-                });
-                snackbar.setActionTextColor(0xFFD32F2F); //hex for red
-                snackbar.show();
-            }
-        }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
