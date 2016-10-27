@@ -23,7 +23,7 @@
     <item android:title="Tools">
         <menu>
             <item
-                android:id="@+id/export_import"
+                android:id="@+id/export"
                 android:icon="@drawable/ic_swap_vertical_circle_black_24dp"
                 android:title="Export / Import" />
             <item

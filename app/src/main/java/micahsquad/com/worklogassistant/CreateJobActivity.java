@@ -30,8 +30,6 @@ public class CreateJobActivity extends AppCompatActivity implements AdapterView.
     private Context context;
     private long jobid;
 
-    private WorkLogDB db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

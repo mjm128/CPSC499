@@ -1,14 +1,18 @@
 package micahsquad.com.worklogassistant;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.app.FragmentManager;
-import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -23,8 +27,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import static android.R.attr.data;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int REQUEST_EXTERNAL_STORAGE_RESULT = 1;
     FloatingActionButton fab;
     FragmentManager fragment;
     private Context context;
@@ -167,7 +174,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_statistics_layout) {
             fragment.beginTransaction().replace(R.id.content_frame, new StatisticsFragment(), "STATISTICS").commit();
             fab.hide();
-        } else if (id == R.id.export_import) {
+        } else if (id == R.id.export) {
+            exportDatabase();
 
         } else if (id == R.id.pdf) {
 
@@ -178,5 +186,62 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void exportDatabase(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED){
+                final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                try (WorkLogDB db = new WorkLogDB(context)) {
+                    db.exportDatabse("WorkLogAssistant.db", context, coordinatorLayoutView);
+                }
+            } else {
+                //Ask for permissions
+                if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                    Snackbar snackbar = Snackbar.make(coordinatorLayoutView, "External storage " +
+                            "permission required to export database", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+                requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_EXTERNAL_STORAGE_RESULT);
+            }
+
+        } else {
+            final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+            try (WorkLogDB db = new WorkLogDB(context)) {
+                db.exportDatabse("WorkLogAssistant.db", context, coordinatorLayoutView);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+        if(requestCode == REQUEST_EXTERNAL_STORAGE_RESULT){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                try (WorkLogDB db = new WorkLogDB(context)) {
+                    db.exportDatabse("WorkLogAssistant.db", context, coordinatorLayoutView);
+                }
+            } else {
+                final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                Snackbar snackbar = Snackbar.make(coordinatorLayoutView, "External write " +
+                        "permission denied", Snackbar.LENGTH_LONG).setAction("SETTINGS", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+                        intent.setData(uri);
+                        startActivity(intent);
+                    }
+                });
+                snackbar.setActionTextColor(0xFFD32F2F); //hex for red
+                snackbar.show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

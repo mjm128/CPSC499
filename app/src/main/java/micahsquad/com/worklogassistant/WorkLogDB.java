@@ -5,9 +5,20 @@ import android.content.Context;
 import android.database.ContentObservable;
 import android.database.Cursor;
 import android.database.sqlite.*;
+import android.os.Environment;
+import android.support.design.widget.Snackbar;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.util.List;
 
 /**
@@ -25,6 +36,43 @@ public class WorkLogDB implements AutoCloseable {
         if (db != null && db.isOpen()){
             db.close();
         }
+    }
+
+    public void exportDatabse(String databaseName, final Context context, View coordinatorLayoutView) {
+        SpannableStringBuilder snackbarText = new SpannableStringBuilder();
+        int boldStart = 0;
+
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            String currentDBPath = "/data/"+ context.getPackageName()+"/databases/"+databaseName;
+            File currentDB = new File(data, currentDBPath);
+            if (currentDB.canWrite()) {
+                //String currentDBPath = "//data//"+ context.getPackageName()+"//databases//"+databaseName;
+                String backupDBPath = "WorkLogAssistant_backup.db";
+                //File currentDB = new File(data, currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                    snackbarText.append("Exported as: ");
+                    boldStart = snackbarText.length();
+                    snackbarText.append(backupDBPath);
+                    Log.i("LOG", "Exported database to sd card");
+                }
+            }
+        } catch (Exception e) {
+            Log.e("LOG", "Failure to export database file to sd card");
+        }
+        snackbarText.setSpan(new ForegroundColorSpan(0xff00BFA5), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        snackbarText.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        Snackbar sb = Snackbar.make(coordinatorLayoutView, snackbarText, Snackbar.LENGTH_LONG);
+        sb.show();
     }
 
     public long createJob(Job j){
