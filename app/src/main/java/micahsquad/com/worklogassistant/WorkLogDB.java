@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.List;
 
+import static micahsquad.com.worklogassistant.DatabaseHelper.DATABASE_NAME;
+
 /**
  * Created by Micah on 7/14/2016.
  */
@@ -64,6 +66,11 @@ public class WorkLogDB implements AutoCloseable {
                     boldStart = snackbarText.length();
                     snackbarText.append(backupDBPath);
                     Log.i("LOG", "Exported database to sd card");
+
+                    SQLiteDatabase copiedDb = context.openOrCreateDatabase(
+                            DATABASE_NAME, 0, null);
+                    copiedDb.execSQL("PRAGMA user_version = " + 1);
+                    copiedDb.close();
                 }
             }
         } catch (Exception e) {
@@ -73,6 +80,61 @@ public class WorkLogDB implements AutoCloseable {
         snackbarText.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         Snackbar sb = Snackbar.make(coordinatorLayoutView, snackbarText, Snackbar.LENGTH_LONG);
         sb.show();
+    }
+
+    public boolean importDatabase(final Context context, View coordinatorLayoutView) {
+        String databaseName = "WorkLogAssistant.db";
+        SpannableStringBuilder snackbarText = new SpannableStringBuilder();
+        int boldStart = 0;
+
+        try{
+            SQLiteDatabase   dbe = SQLiteDatabase.openDatabase(Environment.getExternalStorageDirectory().toString()+"/WorkLogAssistant_backup.db", null,0);
+            Log.d("opendb","EXIST");
+            dbe.close();
+        } catch (Exception e){
+            Log.d("test", "File is not a proper database file");
+            snackbarText.append("File is not a proper database...");
+            snackbarText.setSpan(new ForegroundColorSpan(0xFFD32F2F), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            snackbarText.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            Snackbar sb = Snackbar.make(coordinatorLayoutView, snackbarText, Snackbar.LENGTH_LONG);
+            sb.show();
+        }
+
+
+        try {
+
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            String backupDBPath = "WorkLogAssistant_backup.db";
+            //File currentDB = new File(data, currentDBPath);
+            File backupDB = new File(sd, backupDBPath);
+
+            String currentDBPath = "/data/"+ context.getPackageName()+"/databases/"+databaseName;
+            File currentDB = new File(data, currentDBPath);
+            if (backupDB.canWrite()) {
+
+                if (backupDB.exists()) {
+                    FileChannel src = new FileInputStream(backupDB).getChannel();
+                    FileChannel dst = new FileOutputStream(currentDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                    snackbarText.append("Importing database...");
+                    Log.i("LOG", "Imported database from sd card");
+                }
+            }
+        } catch (Exception e) {
+            Log.e("LOG", "Failure to import database from sd card");
+            return false;
+        }
+
+        snackbarText.setSpan(new ForegroundColorSpan(0xff00BFA5), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        snackbarText.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), boldStart, snackbarText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        Snackbar sb = Snackbar.make(coordinatorLayoutView, snackbarText, Snackbar.LENGTH_LONG);
+        sb.show();
+
+        return true;
     }
 
     public long createJob(Job j){

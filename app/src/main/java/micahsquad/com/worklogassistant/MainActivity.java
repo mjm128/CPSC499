@@ -27,21 +27,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import static android.R.attr.data;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int REQUEST_EXTERNAL_STORAGE_RESULT = 1;
+    private static final int REQUEST_EXTERNAL_STORAGE_WRITE_RESULT = 1;
+    private static final int REQUEST_EXTERNAL_STORAGE_READ_RESULT = 2;
     FloatingActionButton fab;
     FragmentManager fragment;
     private Context context;
     private WorkLogDB db;
+    String Nav = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (fragment == null){
             FragmentManager fragment = getFragmentManager();
             fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment(), "JOBS").commit();
+            Nav = "JOBS";
         }
         context = getApplicationContext();
 
@@ -165,20 +166,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Handle the camera action
             fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment(), "JOBS").commit();
             fab.show();
+            Nav = "JOBS";
         } else if (id == R.id.nav_recent_layout) {
             fragment.beginTransaction().replace(R.id.content_frame, new RecentFragment(), "RECENT").commit();
             fab.hide();
+            Nav = "RECENT";
         } else if (id == R.id.nav_search_layout) {
             fragment.beginTransaction().replace(R.id.content_frame, new SearchFragment(), "SEARCH").commit();
             fab.hide();
+            Nav = "SEARCH";
         } else if (id == R.id.nav_statistics_layout) {
             fragment.beginTransaction().replace(R.id.content_frame, new StatisticsFragment(), "STATISTICS").commit();
             fab.hide();
-        } else if (id == R.id.export) {
+            Nav = "STATISTICS";
+        } else if (id == R.id.export_db) {
             exportDatabase();
-
-        } else if (id == R.id.pdf) {
-
+        } else if (id == R.id.import_db) {
+            importDatabase();
+            switch (Nav){
+                case "JOBS":
+                    fragment.beginTransaction().replace(R.id.content_frame, new JobsFragment(), "JOBS").commit();
+                    fab.show();
+                    break;
+                case "RECENT":
+                    fragment.beginTransaction().replace(R.id.content_frame, new RecentFragment(), "RECENT").commit();
+                    fab.hide();
+                    break;
+                case "SEARCH":
+                    fragment.beginTransaction().replace(R.id.content_frame, new SearchFragment(), "SEARCH").commit();
+                    fab.hide();
+                    break;
+                case "STATISTICS":
+                    fragment.beginTransaction().replace(R.id.content_frame, new StatisticsFragment(), "STATISTICS").commit();
+                    fab.hide();
+                    break;
+            }
         } else if (id == R.id.settings) {
 
         }
@@ -205,8 +227,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     snackbar.show();
                 }
                 requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQUEST_EXTERNAL_STORAGE_RESULT);
+                        REQUEST_EXTERNAL_STORAGE_WRITE_RESULT);
             }
+
 
         } else {
             final View coordinatorLayoutView = findViewById(R.id.floating_plus);
@@ -216,9 +239,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    public void importDatabase(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED){
+                final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                try (WorkLogDB db = new WorkLogDB(context)) {
+                    db.importDatabase(context, coordinatorLayoutView);
+                }
+            } else {
+                //Ask for permissions
+                if(shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)){
+                    final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                    Snackbar snackbar = Snackbar.make(coordinatorLayoutView, "External storage " +
+                            "permission required to import database", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_EXTERNAL_STORAGE_READ_RESULT);
+            }
+
+        } else {
+            final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+            try (WorkLogDB db = new WorkLogDB(context)) {
+                db.importDatabase(context, coordinatorLayoutView);
+            }
+        }
+
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
-        if(requestCode == REQUEST_EXTERNAL_STORAGE_RESULT){
+        if(requestCode == REQUEST_EXTERNAL_STORAGE_WRITE_RESULT){
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 final View coordinatorLayoutView = findViewById(R.id.floating_plus);
                 try (WorkLogDB db = new WorkLogDB(context)) {
@@ -240,6 +292,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 snackbar.setActionTextColor(0xFFD32F2F); //hex for red
                 snackbar.show();
             }
+        } else if(requestCode == REQUEST_EXTERNAL_STORAGE_READ_RESULT){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                try (WorkLogDB db = new WorkLogDB(context)) {
+                    db.importDatabase(context, coordinatorLayoutView);
+                }
+            } else {
+                final View coordinatorLayoutView = findViewById(R.id.floating_plus);
+                Snackbar snackbar = Snackbar.make(coordinatorLayoutView, "External read " +
+                        "permission denied", Snackbar.LENGTH_LONG).setAction("SETTINGS", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+                        intent.setData(uri);
+                        startActivity(intent);
+                    }
+                });
+                snackbar.setActionTextColor(0xFFD32F2F); //hex for red
+                snackbar.show();
+            }
+
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }

@@ -1,5 +1,13 @@
 ============================== APK Change Log ==============================
 
+----- Version 0.11 () -----
+    - Export Database to sd card
+    - Import Database from sd card
+    - Android M style permissions
+    - Need to fix Base Pay in Create Record
+    - Need to fix Time calculation in Record
+    - Need to fix Hours Worked Displaying
+
 ----- Version 0.11 (9/19/2016) -----
     - Fixed issue where creating new Job crashed the app. YIKES!
     - Creating Job is fully working now
